@@ -6,6 +6,7 @@ import '../models/rest/config.dart';
 import '../models/rest/config_response.dart';
 import '../models/rest/history.dart';
 import '../models/rest/history_response.dart';
+import '../models/rest/uploaded_multi_response.dart';
 import '../models/rest/uploaded_response.dart';
 import '../services/api.dart';
 
@@ -42,6 +43,7 @@ class FileRepository {
       multiPasteIds.putIfAbsent("ids[${ids.indexOf(element) + 1}]", () => element);
     });
 
-    await _api.post('/file/create_multipaste', fields: multiPasteIds);
+    var response = await _api.post('/file/create_multipaste', fields: multiPasteIds);
+    return UploadedMultiResponse.fromJson(json.decode(response.body));
   }
 }

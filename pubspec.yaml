@@ -25,7 +25,7 @@ dependencies:
   flutter_translate: 1.6.0
   provider: 4.3.3
   provider_architecture: 1.1.1+1
-  get_it: 3.1.0 # major changes in 4.x
+  get_it: 3.1.0 # major changes > 3
   logger: 0.9.4
   shared_preferences: 0.5.12+4
   http: 0.12.2
@@ -36,6 +36,7 @@ dependencies:
   expandable: 4.1.4
   share: 0.6.5+4
   file_picker: 2.1.6
+  clipboard: 0.1.2+8
 
 dev_dependencies:
   flutter_test:

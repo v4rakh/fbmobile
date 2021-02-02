@@ -12,6 +12,7 @@ import '../enums/viewstate.dart';
 import '../error/rest_service_exception.dart';
 import '../error/service_exception.dart';
 import '../models/rest/rest_error.dart';
+import '../models/rest/uploaded_multi_response.dart';
 import '../models/rest/uploaded_response.dart';
 import '../services/file_service.dart';
 import '../util/logger.dart';
@@ -73,10 +74,11 @@ class UploadModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
-  void upload() async {
+  Future<List<String>> upload() async {
     setState(ViewState.Busy);
     setStateMessage(translate('upload.uploading_now'));
 
+    List<String> uploadedPasteIds = [];
     try {
       List<File> files;
       Map<String, String> additionalFiles;
@@ -91,14 +93,17 @@ class UploadModel extends BaseModel {
       }
 
       UploadedResponse response = await _fileService.upload(files, additionalFiles);
+      uploadedPasteIds.addAll(response.data.ids);
 
       if (createMulti && response.data.ids.length > 1) {
-        await _fileService.createMulti(response.data.ids);
+        UploadedMultiResponse multiResponse = await _fileService.createMulti(response.data.ids);
+        uploadedPasteIds.add(multiResponse.data.urlId);
       }
 
       clearCachedFiles();
       _pasteTextController.clear();
       errorMessage = null;
+      return uploadedPasteIds;
     } catch (e) {
       if (e is RestServiceException) {
         if (e.statusCode == HttpStatus.notFound) {
@@ -132,6 +137,7 @@ class UploadModel extends BaseModel {
 
     setStateMessage(null);
     setState(ViewState.Idle);
+    return null;
   }
 
   @override

@@ -1,7 +1,10 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/enums/viewstate.dart';
+import '../../core/models/session.dart';
 import '../../core/viewmodels/upload_model.dart';
 import '../shared/app_colors.dart';
 import '../widgets/centered_error_row.dart';
@@ -13,6 +16,8 @@ class UploadView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var url = Provider.of<Session>(context).url;
+
     return BaseView<UploadModel>(
         builder: (context, model, child) => Scaffold(
             appBar: MyAppBar(title: Text(translate('titles.upload'))),
@@ -96,7 +101,31 @@ class UploadView extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(24),
                                           ),
                                           color: primaryAccentColor,
-                                          onPressed: () => model.upload(),
+                                          onPressed: () async {
+                                            List<String> items = await model.upload();
+
+                                            if (items != null) {
+                                              var clipboardContent = '';
+                                              items.forEach((element) {
+                                                clipboardContent += '$url/$element\n';
+                                              });
+
+                                              FlutterClipboard.copy(clipboardContent).then((value) {
+                                                final snackBar = SnackBar(
+                                                  action: SnackBarAction(
+                                                    label: translate('upload.dismiss'),
+                                                    textColor: Colors.blue,
+                                                    onPressed: () {
+                                                      Scaffold.of(context).hideCurrentSnackBar();
+                                                    },
+                                                  ),
+                                                  content: Text(translate('upload.uploaded')),
+                                                  duration: Duration(seconds: 10),
+                                                );
+                                                Scaffold.of(context).showSnackBar(snackBar);
+                                              });
+                                            }
+                                          },
                                           icon: Icon(Icons.upload_rounded, color: Colors.green),
                                           label: Text(
                                             translate('upload.upload'),

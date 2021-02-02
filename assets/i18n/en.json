@@ -31,6 +31,8 @@
     "upload": "Upload",
     "uploading_now": "Uploading...",
     "file_explorer_open": "Selecting files...",
+    "uploaded": "Uploaded! Copied links to clipboard.",
+    "dismiss": "Dismiss",
     "multipaste": "multipaste",
     "errors": {
       "not_found": "Not found"
