@@ -1,0 +1,116 @@
+{
+  "api": {
+    "forbidden": "You're not allowed to access this resource",
+    "bad_request": "Bad request: {reason}",
+    "socket_error": "Not a valid host or no internet connection",
+    "socket_timeout": "Request timed out - please ensure your internet connection is stable and that you're connecting to a valid FileBin instance and that it's not under heavy load",
+    "general_rest_error": "An unknown error occurred during communication",
+    "general_rest_error_payload": "An unknown error occurred during communication: {message}"
+  },
+  "app": {
+    "title": "FileBin Mobile",
+    "unknown_error": "An unknown error occurred, please try again"
+  },
+  "titles": {
+    "login": "Login",
+    "history": "History",
+    "profile": "Profile",
+    "about": "About",
+    "upload": "Upload"
+  },
+  "tabs": {
+    "login": "Login",
+    "history": "History",
+    "profile": "Profile",
+    "upload": "Upload"
+  },
+  "upload": {
+    "open_file_explorer": "Select...",
+    "clear_temporary_files": "Clear",
+    "text_to_be_pasted": "Text...",
+    "upload": "Upload",
+    "uploading_now": "Uploading...",
+    "file_explorer_open": "Selecting files...",
+    "multipaste": "multipaste",
+    "errors": {
+      "not_found": "Not found"
+    }
+  },
+  "startup": {
+    "init": "Initializing...",
+    "start_services": "Starting services..."
+  },
+  "login": {
+    "help": "Login",
+    "compatibility_dialog": {
+      "title": "How to login?",
+      "body": "A FileBin instance >= 3.5.0 and a valid API key with at least access-level 'apikey' is required."
+    },
+    "url_placeholder": "https://paste.domain.tld",
+    "apikey_placeholder": "API key",
+    "button": "Login",
+    "errors": {
+      "empty_url": "Please provide a FileBin URL",
+      "no_protocol": "URLs need to include a valid protocol like http:// or https://",
+      "invalid_url": "Please provide a valid FileBin URL",
+      "empty_apikey": "Please provide an API key",
+      "wrong_credentials": "Credentials are invalid",
+      "forbidden": "You're not allowed to access this instance"
+    }
+  },
+  "history": {
+    "no_items": "No pastes found",
+    "filename": "Filename",
+    "id": "ID",
+    "filesize": "Filesize",
+    "link": "Link",
+    "date": "Date",
+    "open_link": "Open in browser",
+    "delete": "Delete permanently",
+    "multipaste_element": "Included as multipaste item",
+    "errors": {
+      "not_found": "No pastes found"
+    },
+    "delete_dialog": {
+      "title": "Are you sure?",
+      "description": "Paste '{id}' will be deleted permanently.",
+      "accept": "Yes",
+      "deny": "Rather not"
+    }
+  },
+  "about": {
+    "headline": "Welcome to FileBin mobile!",
+    "description": "This application is a mobile client for FileBin and it's open source. It helps you to manage your pastes.\n\nIn order to use the application, you need access to a FileBin instance and an API key to sign in. It's recommended that the API key has at least 'apikey' access-level.",
+    "contact_us": "Feedback? Issues?",
+    "website": "Main application: https://github.com/Bluewind/filebin\n\nMobile: https://github.com/v4rakh/fbmobile"
+  },
+  "profile": {
+    "welcome": "Hi!",
+    "connection": "You're currently connected to:\n\nURL: {url}",
+    "config": "Instance configuration:\n\nUpload max size: {uploadMaxSize}\n\nMax files per request: {maxFilesPerRequest}\n\nMax inputs vars: {maxInputVars}\n\nRequest max size: {requestMaxSize}",
+    "reveal_api_key": "Reveal API key",
+    "revealed_api_key": {
+      "title": "API key",
+      "description": "{apiKey}"
+    }
+  },
+  "logout": {
+    "title": "Logout",
+    "confirm": "Are you sure?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "link": {
+    "dialog": {
+      "title": "Link opening failed",
+      "description": "Could not open '{link}'. Please ensure that you have an application installed which handles opening such link types."
+    }
+  },
+  "dialog": {
+    "confirm": "OK",
+    "cancel": "Cancel"
+  },
+  "dev": {
+    "no_route": "No route defined for {route}"
+  }
+}
