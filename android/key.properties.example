@@ -1,0 +1,4 @@
+storePassword=
+keyPassword=
+keyAlias=key
+storeFile=/absolute/path/to/git/android/fastlane/secrets/key.jks

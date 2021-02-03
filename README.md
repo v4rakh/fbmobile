@@ -81,11 +81,10 @@ different platforms.
 
 ##### Android
 
-* Extract the encrypted ZIP file from `_secrets/` into the same folder with GPG. Ask for the password if necessary. 
 * Copy `android/key.properties.example` to `android/key.properties`
 * Adjust properties matching your setup and folder structure
-* Point to the `_secrets/key.jks` you just extracted and ask for the store password.
-* Copy the `api-xxx.json` file into `android/fastlane/`
+* Point to the `android/fastlane/secrets/key.jks` you just extracted and ask for the store password.
+* Copy the `api-access.json` file into `android/fastlane/secrets/`
 
 ##### iOS
 

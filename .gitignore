@@ -41,6 +41,11 @@ flutter_export_environment.sh
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/**/gen/
+**/android/key.properties
+**/android/fastlane/secrets/*
+!**/android/fastlane/secrets/.gitkeep
+**/android/fastlane/metadata/**
+**/android/fastlane/report.*
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
