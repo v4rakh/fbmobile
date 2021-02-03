@@ -68,6 +68,7 @@
     "filesize": "Filesize",
     "link": "Link",
     "date": "Date",
+    "open_link": "Open in browser",
     "mimetype": "Mimetype",
     "delete": "Delete permanently",
     "multipaste_element": "Included as multipaste item",
