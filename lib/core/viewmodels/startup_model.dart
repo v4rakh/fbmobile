@@ -14,11 +14,11 @@ class StartUpViewModel extends BaseModel {
   Future handleStartUpLogic() async {
     setState(ViewState.Busy);
     setStateMessage(translate('startup.init'));
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 150));
 
     setStateMessage(translate('startup.start_services'));
     await _sessionService.start();
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 150));
 
     _navigationService.navigateAndReplaceTo(HomeView.routeName);
 

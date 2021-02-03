@@ -19,7 +19,7 @@ class AboutView extends StatelessWidget {
       tag: 'hero',
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 96.0,
+        radius: 30.0,
         child: Image.asset('assets/logo_caption.png'),
       ),
     );
@@ -39,10 +39,22 @@ class AboutView extends StatelessWidget {
                     shrinkWrap: true,
                     padding: EdgeInsets.only(left: 24.0, right: 24.0),
                     children: <Widget>[
+                      UIHelper.verticalSpaceMedium(),
                       Center(child: logo),
+                      UIHelper.verticalSpaceMedium(),
                       Center(
                           child: Text(
                         translate(('about.description')),
+                      )),
+                      UIHelper.verticalSpaceMedium(),
+                      Center(
+                          child: Text(
+                        translate(('about.faq_headline')),
+                        style: subHeaderStyle,
+                      )),
+                      Center(
+                          child: Text(
+                        translate(('about.faq')),
                       )),
                       UIHelper.verticalSpaceMedium(),
                       Center(

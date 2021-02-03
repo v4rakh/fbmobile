@@ -35,7 +35,8 @@
     "dismiss": "Dismiss",
     "multipaste": "multipaste",
     "errors": {
-      "not_found": "Not found"
+      "not_found": "Not found",
+      "retrieval_intent": "An error occurred while retrieving shared data"
     }
   },
   "startup": {
@@ -67,7 +68,7 @@
     "filesize": "Filesize",
     "link": "Link",
     "date": "Date",
-    "open_link": "Open in browser",
+    "mimetype": "Mimetype",
     "delete": "Delete permanently",
     "multipaste_element": "Included as multipaste item",
     "errors": {
@@ -82,7 +83,9 @@
   },
   "about": {
     "headline": "Welcome to FileBin mobile!",
-    "description": "This application is a mobile client for FileBin and it's open source. It helps you to manage your pastes.\n\nIn order to use the application, you need access to a FileBin instance and an API key to sign in. It's recommended that the API key has at least 'apikey' access-level.",
+    "description": "This application is a mobile client for FileBin and it's open source. It helps you to manage your pastes.\n\nIn order to use the application, you need access to a FileBin instance.",
+    "faq_headline": "F.A.Q",
+    "faq": "- How do I login?\nInsert your instance URL and an API key which you can generate in the web interface of FileBin. You should use 'apikey' access-level in order to show history.\n\n- Why is storage permission required?\nIt's not required, but highly advised to grant it. Otherwise sharing files with the app won't work correctly and you might think that sharing has no effect.\n\n- When I am logged out, sharing files via share with the app won't list all files I selected after I login.\nPlease login before you start using the app. Account information are persisted. You only need to do it once.",
     "contact_us": "Feedback? Issues?",
     "website": "Main application: https://github.com/Bluewind/filebin\n\nMobile: https://github.com/v4rakh/fbmobile"
   },
@@ -106,6 +109,14 @@
     "dialog": {
       "title": "Link opening failed",
       "description": "Could not open '{link}'. Please ensure that you have an application installed which handles opening such link types."
+    }
+  },
+  "permission_service": {
+    "dialog": {
+      "title": "Storage permission",
+      "description": "Storage permission should be granted to the app so that it can work properly. Do you want to grant permission or ignore this message permanently in the future?",
+      "grant": "Grant",
+      "ignore": "Ignore"
     }
   },
   "dialog": {

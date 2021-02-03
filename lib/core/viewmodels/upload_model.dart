@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:logger/logger.dart';
+import 'package:path/path.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import '../../locator.dart';
 import '../enums/error_code.dart';
@@ -15,15 +18,19 @@ import '../models/rest/rest_error.dart';
 import '../models/rest/uploaded_multi_response.dart';
 import '../models/rest/uploaded_response.dart';
 import '../services/file_service.dart';
+import '../services/link_service.dart';
 import '../util/logger.dart';
 import 'base_model.dart';
 
 class UploadModel extends BaseModel {
   final Logger _logger = getLogger();
   final FileService _fileService = locator<FileService>();
-  TextEditingController _pasteTextController = TextEditingController();
-  bool createMulti = false;
+  final LinkService _linkService = locator<LinkService>();
 
+  TextEditingController _pasteTextController = TextEditingController();
+  StreamSubscription _intentDataStreamSubscription;
+
+  bool createMulti = false;
   String fileName;
   List<PlatformFile> paths;
   String _extension;
@@ -31,6 +38,68 @@ class UploadModel extends BaseModel {
   String errorMessage;
 
   TextEditingController get pasteTextController => _pasteTextController;
+
+  void init() {
+    // For sharing images coming from outside the app while the app is in the memory
+    _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream().listen((List<SharedMediaFile> value) {
+      if (value != null && value.length > 0) {
+        setState(ViewState.Busy);
+        paths = value.map((sharedFile) {
+          return PlatformFile.fromMap({
+            'path': sharedFile.path,
+            'name': basename(sharedFile.path),
+            'size': File(sharedFile.path).lengthSync(),
+            'bytes': null
+          });
+        }).toList();
+        setState(ViewState.Idle);
+      }
+    }, onError: (err) {
+      setState(ViewState.Busy);
+      errorMessage = translate('upload.retrieval_intent');
+      _logger.e('Error while retrieving shared data: $err');
+      setState(ViewState.Idle);
+    });
+
+    // For sharing images coming from outside the app while the app is closed
+    ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
+      if (value != null && value.length > 0) {
+        setState(ViewState.Busy);
+        paths = value.map((sharedFile) {
+          return PlatformFile.fromMap({
+            'path': sharedFile.path,
+            'name': basename(sharedFile.path),
+            'size': File(sharedFile.path).lengthSync(),
+            'bytes': null
+          });
+        }).toList();
+        setState(ViewState.Idle);
+      }
+    });
+
+    // For sharing or opening urls/text coming from outside the app while the app is in the memory
+    _intentDataStreamSubscription = ReceiveSharingIntent.getTextStream().listen((String value) {
+      if (value != null && value.isNotEmpty) {
+        setState(ViewState.Busy);
+        pasteTextController.text = value;
+        setState(ViewState.Idle);
+      }
+    }, onError: (err) {
+      setState(ViewState.Busy);
+      errorMessage = translate('upload.retrieval_intent');
+      _logger.e('Error while retrieving shared data: $err');
+      setState(ViewState.Idle);
+    });
+
+    // For sharing or opening urls/text coming from outside the app while the app is closed
+    ReceiveSharingIntent.getInitialText().then((String value) {
+      if (value != null && value.isNotEmpty) {
+        setState(ViewState.Busy);
+        pasteTextController.text = value;
+        setState(ViewState.Idle);
+      }
+    });
+  }
 
   void toggleCreateMulti() {
     setState(ViewState.Busy);
@@ -140,9 +209,14 @@ class UploadModel extends BaseModel {
     return null;
   }
 
+  void openLink(String link) {
+    _linkService.open(link);
+  }
+
   @override
   void dispose() {
     _pasteTextController.dispose();
+    _intentDataStreamSubscription.cancel();
     super.dispose();
   }
 }

@@ -7,6 +7,7 @@ import '../models/session.dart';
 class StorageService {
   static const _SESSION_KEY = 'session';
   static const _LAST_URL_KEY = 'last_url';
+  static const _STORAGE_PERMISSION_DIALOG_IGNORED = 'storage_permission_ignored';
 
   Future<bool> storeLastUrl(String url) {
     return _store(_LAST_URL_KEY, url);
@@ -35,6 +36,14 @@ class StorageService {
 
   Future<bool> removeSession() {
     return _remove(_SESSION_KEY);
+  }
+
+  Future<bool> storeStoragePermissionDialogIgnored() {
+    return _store(_STORAGE_PERMISSION_DIALOG_IGNORED, true.toString());
+  }
+
+  Future<bool> hasStoragePermissionDialogIgnored() {
+    return _exists(_STORAGE_PERMISSION_DIALOG_IGNORED);
   }
 
   Future<bool> _exists(String key) async {

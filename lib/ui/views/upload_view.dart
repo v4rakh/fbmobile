@@ -19,6 +19,7 @@ class UploadView extends StatelessWidget {
     var url = Provider.of<Session>(context).url;
 
     return BaseView<UploadModel>(
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) => Scaffold(
             appBar: MyAppBar(title: Text(translate('titles.upload'))),
             backgroundColor: backgroundColor,

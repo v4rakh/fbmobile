@@ -48,6 +48,19 @@
     </array>
     <key>NSAppleMusicUsageDescription</key>
     <string>Allow to select music files and upload them via the app</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>ShareMedia</string>
+            </array>
+        </dict>
+        <dict/>
+    </array>
+    // TODO follow steps 2) on create share extension (https://pub.dev/packages/receive_sharing_intent)
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Allow to select photos and upload them via the app</string>
 </dict>

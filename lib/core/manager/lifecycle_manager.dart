@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 
 import '../../core/services/session_service.dart';
 import '../../locator.dart';
+import '../services/permission_service.dart';
 import '../services/stoppable_service.dart';
 import '../util/logger.dart';
 
@@ -18,7 +19,7 @@ class LifeCycleManager extends StatefulWidget {
 class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBindingObserver {
   final Logger logger = getLogger();
 
-  List<StoppableService> servicesToManage = [locator<SessionService>()];
+  List<StoppableService> servicesToManage = [locator<SessionService>(), locator<PermissionService>()];
 
   @override
   Widget build(BuildContext context) {

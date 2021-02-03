@@ -89,11 +89,15 @@ class HistoryView extends StatelessWidget {
             title: Text(paste.id),
             subtitle: Text(translate('history.id')),
           );
+          var mimeTypeWidget = ListTile(
+            title: Text(paste.mimetype),
+            subtitle: Text(translate('history.mimetype')),
+          );
 
           widgets.add(titleWidget);
-
-          widgets.add(fileSizeWidget);
           widgets.add(idWidget);
+          widgets.add(fileSizeWidget);
+          widgets.add(mimeTypeWidget);
         } else {
           paste.items.forEach((element) {
             widgets.add(ListTile(
@@ -110,18 +114,19 @@ class HistoryView extends StatelessWidget {
 
         var expandable = ExpandableTheme(
           data: ExpandableThemeData(
-            iconColor: Colors.blue,
-            tapHeaderToExpand: true,
-            iconPlacement: ExpandablePanelIconPlacement.right,
-            headerAlignment: ExpandablePanelHeaderAlignment.center,
-            hasIcon: true,
-          ),
+              iconPlacement: ExpandablePanelIconPlacement.right,
+              headerAlignment: ExpandablePanelHeaderAlignment.center,
+              hasIcon: true,
+              iconColor: Colors.blue,
+              tapHeaderToExpand: true),
           child: ExpandablePanel(
-            header: Text(
-              paste.id,
-              textAlign: TextAlign.left,
-              style: TextStyle(color: primaryAccentColor),
-            ),
+            header: InkWell(
+                onLongPress: () => model.deletePaste(paste.id),
+                child: Text(
+                  paste.id,
+                  style: TextStyle(color: Colors.blue),
+                  textAlign: TextAlign.left,
+                )),
             expanded: Column(
               mainAxisSize: MainAxisSize.min,
               children: widgets,
@@ -132,12 +137,15 @@ class HistoryView extends StatelessWidget {
         cards.add(Card(
           child: ListTile(
             title: expandable,
-            trailing: IconButton(
-                icon: Icon(Icons.share, color: Colors.blue, textDirection: TextDirection.ltr),
-                onPressed: () {
-                  return Share.share(fullPasteUrl);
-                }),
-            subtitle: Text(!paste.isMulti ? paste.filename : ''),
+            trailing: Wrap(children: [
+              openInBrowserButton,
+              IconButton(
+                  icon: Icon(Icons.share, color: Colors.blue, textDirection: TextDirection.ltr),
+                  onPressed: () {
+                    return Share.share(fullPasteUrl);
+                  })
+            ]),
+            subtitle: Text(!paste.isMulti ? paste.filename : '', style: TextStyle(fontStyle: FontStyle.italic)),
           ),
         ));
       });
