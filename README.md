@@ -101,6 +101,8 @@ Go into the platform directory you want to build for, e.g. `ios/` or `android/` 
 `Fastlane` file which lanes are present. Run a lane via `fastlane <platform> <lane>`, e.g. use the
 following to build for Android `fastlane android build`.
 
+**Important!** For iOS you need to execute `pod install` first. You also need `cocoapods` installed.
+
 ##### Android
 
 Use `fastlane android beta` to build and upload a new beta version to the Play Store.
