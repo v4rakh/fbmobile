@@ -21,7 +21,10 @@ class HistoryView extends StatelessWidget {
     var url = Provider.of<Session>(context).url;
 
     return BaseView<HistoryModel>(
-      onModelReady: (model) => model.getHistory(),
+      onModelReady: (model) {
+        model.init();
+        return model.getHistory();
+      },
       builder: (context, model, child) => Scaffold(
           appBar: MyAppBar(title: Text(translate('titles.history'))),
           backgroundColor: backgroundColor,
@@ -38,14 +41,6 @@ class HistoryView extends StatelessWidget {
                         retryCallback: () => model.getHistory(),
                       )))),
     );
-  }
-
-  Widget _renderOpenInBrowser(HistoryModel model, String url) {
-    return IconButton(
-        icon: Icon(Icons.open_in_new, color: Colors.blue, textDirection: TextDirection.ltr),
-        onPressed: () {
-          return model.openLink(url);
-        });
   }
 
   Widget _render(HistoryModel model, String url) {
@@ -162,5 +157,13 @@ class HistoryView extends StatelessWidget {
       children: cards,
       physics: AlwaysScrollableScrollPhysics(),
     );
+  }
+
+  Widget _renderOpenInBrowser(HistoryModel model, String url) {
+    return IconButton(
+        icon: Icon(Icons.open_in_new, color: Colors.blue, textDirection: TextDirection.ltr),
+        onPressed: () {
+          return model.openLink(url);
+        });
   }
 }

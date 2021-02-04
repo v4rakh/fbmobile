@@ -7,6 +7,7 @@ import 'core/services/file_service.dart';
 import 'core/services/link_service.dart';
 import 'core/services/navigation_service.dart';
 import 'core/services/permission_service.dart';
+import 'core/services/refresh_service.dart';
 import 'core/services/session_service.dart';
 import 'core/services/storage_service.dart';
 import 'core/viewmodels/about_model.dart';
@@ -35,6 +36,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => FileService());
   locator.registerLazySingleton(() => LinkService());
   locator.registerLazySingleton(() => PermissionService());
+  locator.registerLazySingleton(() => RefreshService());
 
   /// view models
   locator.registerFactory(() => StartUpViewModel());

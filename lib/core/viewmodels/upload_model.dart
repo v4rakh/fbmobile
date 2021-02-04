@@ -11,6 +11,7 @@ import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import '../../locator.dart';
 import '../enums/error_code.dart';
+import '../enums/refresh_event.dart';
 import '../enums/viewstate.dart';
 import '../error/rest_service_exception.dart';
 import '../error/service_exception.dart';
@@ -19,6 +20,7 @@ import '../models/rest/uploaded_multi_response.dart';
 import '../models/rest/uploaded_response.dart';
 import '../services/file_service.dart';
 import '../services/link_service.dart';
+import '../services/refresh_service.dart';
 import '../util/logger.dart';
 import 'base_model.dart';
 
@@ -26,6 +28,7 @@ class UploadModel extends BaseModel {
   final Logger _logger = getLogger();
   final FileService _fileService = locator<FileService>();
   final LinkService _linkService = locator<LinkService>();
+  final RefreshService _refreshService = locator<RefreshService>();
 
   TextEditingController _pasteTextController = TextEditingController();
   StreamSubscription _intentDataStreamSubscription;
@@ -171,6 +174,7 @@ class UploadModel extends BaseModel {
 
       clearCachedFiles();
       _pasteTextController.clear();
+      _refreshService.addEvent(RefreshEvent.RefreshHistory);
       errorMessage = null;
       return uploadedPasteIds;
     } catch (e) {

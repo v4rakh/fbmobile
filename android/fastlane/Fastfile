@@ -1,10 +1,21 @@
 default_platform(:android)
 
 platform :android do
+  desc "Build Debug"
+  lane :build_debug do
+    sh("#{ENV['PWD']}/fastlane/buildAndroidDebug.sh")
+  end
+
   desc "Build"
   lane :build do
     sh("#{ENV['PWD']}/fastlane/buildAndroid.sh")
   end
+
+   desc "Deploy a new version to the Google Play as Alpha"
+   lane :alpha do
+     build
+     upload_to_play_store(track: 'alpha', aab: '../build/app/outputs/bundle/release/app-release.aab')
+   end
 
   desc "Deploy a new version to the Google Play as Beta"
   lane :beta do

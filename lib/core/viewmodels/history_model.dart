@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_translate/flutter_translate.dart';
@@ -6,6 +7,7 @@ import 'package:logger/logger.dart';
 import '../../locator.dart';
 import '../datamodels/dialog_response.dart';
 import '../enums/error_code.dart';
+import '../enums/refresh_event.dart';
 import '../enums/viewstate.dart';
 import '../error/rest_service_exception.dart';
 import '../error/service_exception.dart';
@@ -15,18 +17,30 @@ import '../models/uploaded_paste.dart';
 import '../services/dialog_service.dart';
 import '../services/file_service.dart';
 import '../services/link_service.dart';
+import '../services/refresh_service.dart';
 import '../util/logger.dart';
 import 'base_model.dart';
 
 class HistoryModel extends BaseModel {
   final Logger _logger = getLogger();
   final FileService _fileService = locator<FileService>();
+  final RefreshService _refreshService = locator<RefreshService>();
   final LinkService _linkService = locator<LinkService>();
   final DialogService _dialogService = locator<DialogService>();
 
-  String errorMessage;
+  StreamSubscription _refreshTriggerSubscription;
 
   List<UploadedPaste> pastes = [];
+  String errorMessage;
+
+  void init() {
+    this._refreshTriggerSubscription = _refreshService.refreshHistoryController.stream.listen((event) {
+      if (event == RefreshEvent.RefreshHistory) {
+        _logger.d('History needs a refresh');
+        getHistory();
+      }
+    });
+  }
 
   Future getHistory() async {
     setState(ViewState.Busy);
@@ -64,7 +78,6 @@ class HistoryModel extends BaseModel {
       }
 
       pastes.sort((a, b) => a.date.compareTo(b.date));
-
       errorMessage = null;
     } catch (e) {
       if (e is RestServiceException) {
@@ -147,5 +160,11 @@ class HistoryModel extends BaseModel {
 
   void openLink(String link) {
     _linkService.open(link);
+  }
+
+  @override
+  void dispose() {
+    _refreshTriggerSubscription.cancel();
+    super.dispose();
   }
 }
