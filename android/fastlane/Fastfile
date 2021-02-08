@@ -6,6 +6,11 @@ platform :android do
     sh("#{ENV['PWD']}/fastlane/buildAndroidDebug.sh")
   end
 
+    desc "Build Production"
+    lane :build_production do
+      sh("#{ENV['PWD']}/fastlane/buildAndroidProduction.sh")
+    end
+
   desc "Build"
   lane :build do
     sh("#{ENV['PWD']}/fastlane/buildAndroid.sh")

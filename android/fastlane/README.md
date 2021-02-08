@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane android build_debug
 ```
 Build Debug
+### android build_production
+```
+fastlane android build_production
+```
+Build Production
 ### android build
 ```
 fastlane android build
