@@ -5,7 +5,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        // TODO switch to 4.0.1 again: https://github.com/flutter/flutter/issues/58479
+        // TODO switch to 4.0.1 again: https://github.com/miguelpruivo/flutter_file_picker/issues/545
+        classpath 'com.android.tools.build:gradle:3.6.2'
     }
 }
 
