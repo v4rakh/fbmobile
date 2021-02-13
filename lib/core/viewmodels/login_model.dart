@@ -15,20 +15,26 @@ import '../enums/viewstate.dart';
 import '../error/rest_service_exception.dart';
 import '../error/service_exception.dart';
 import '../models/rest/config.dart';
+import '../models/rest/create_apikey_response.dart';
+import '../services/user_service.dart';
 import '../util/logger.dart';
 import 'base_model.dart';
 
 class LoginModel extends BaseModel {
   TextEditingController _uriController = new TextEditingController();
-  final TextEditingController _apiKeyController = new TextEditingController();
+  final TextEditingController _userNameController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
 
   TextEditingController get uriController => _uriController;
 
-  TextEditingController get apiKeyController => _apiKeyController;
+  TextEditingController get userNameController => _userNameController;
+
+  TextEditingController get passwordController => _passwordController;
 
   final SessionService _sessionService = locator<SessionService>();
   final StorageService _storageService = locator<StorageService>();
-  final FileService _configService = locator<FileService>();
+  final UserService _userService = locator<UserService>();
+  final FileService _fileService = locator<FileService>();
   final Logger _logger = getLogger();
 
   String errorMessage;
@@ -48,10 +54,11 @@ class LoginModel extends BaseModel {
     }
   }
 
-  Future<bool> login(String url, String apiKey) async {
+  Future<bool> login(String url, String username, String password) async {
     setState(ViewState.Busy);
 
     url = trim(url);
+    username = trim(username);
 
     if (url.isEmpty) {
       errorMessage = translate('login.errors.empty_url');
@@ -72,16 +79,24 @@ class LoginModel extends BaseModel {
       return false;
     }
 
-    if (apiKey.isEmpty) {
-      errorMessage = translate('login.errors.empty_apikey');
+    if (username.isEmpty) {
+      errorMessage = translate('login.errors.empty_username');
+      setState(ViewState.Idle);
+      return false;
+    }
+
+    if (password.isEmpty) {
+      errorMessage = translate('login.errors.empty_password');
       setState(ViewState.Idle);
       return false;
     }
 
     var success = false;
     try {
-      Config config = await _configService.getConfig(url);
-      success = await _sessionService.login(url, apiKey, config);
+      Config config = await _fileService.getConfig(url);
+      CreateApiKeyResponse apiKeyResponse =
+          await _userService.createApiKey(url, username, password, 'apikey', 'fbmobile');
+      success = await _sessionService.login(url, apiKeyResponse.data['new_key'], config);
       errorMessage = null;
     } catch (e) {
       if (e is RestServiceException) {
@@ -91,6 +106,9 @@ class LoginModel extends BaseModel {
           errorMessage = translate('login.errors.forbidden');
         } else if (e.statusCode == HttpStatus.notFound) {
           errorMessage = translate('api.incompatible_error_not_found');
+        }
+        if (e.statusCode == HttpStatus.badRequest) {
+          errorMessage = translate('api.bad_request', args: {'reason': e.responseBody.message});
         } else {
           errorMessage = translate('api.general_rest_error');
         }

@@ -3,11 +3,16 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 class LoginHeaders extends StatelessWidget {
   final TextEditingController uriController;
-  final TextEditingController apiKeyController;
+  final TextEditingController usernameController;
+  final TextEditingController passwordController;
 
   final String validationMessage;
 
-  LoginHeaders({@required this.uriController, @required this.apiKeyController, this.validationMessage});
+  LoginHeaders(
+      {@required this.uriController,
+      @required this.usernameController,
+      @required this.passwordController,
+      this.validationMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,10 @@ class LoginHeaders extends StatelessWidget {
       this.validationMessage != null ? Text(validationMessage, style: TextStyle(color: Colors.red)) : Container(),
       LoginTextField(uriController, translate('login.url_placeholder'), Icon(Icons.link),
           keyboardType: TextInputType.url),
-      LoginTextField(apiKeyController, translate('login.apikey_placeholder'), Icon(Icons.vpn_key), obscureText: true),
+      LoginTextField(usernameController, translate('login.username_placeholder'), Icon(Icons.person),
+          keyboardType: TextInputType.name),
+      LoginTextField(passwordController, translate('login.password_placeholder'), Icon(Icons.vpn_key),
+          obscureText: true),
     ]);
   }
 }

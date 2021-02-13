@@ -68,7 +68,8 @@ class _LoginViewState extends State<LoginView> {
                   LoginHeaders(
                     validationMessage: model.errorMessage,
                     uriController: model.uriController,
-                    apiKeyController: model.apiKeyController,
+                    usernameController: model.userNameController,
+                    passwordController: model.passwordController,
                   ),
                   RaisedButton(
                     shape: RoundedRectangleBorder(
@@ -78,7 +79,8 @@ class _LoginViewState extends State<LoginView> {
                     color: primaryAccentColor,
                     child: Text(translate('login.button'), style: TextStyle(color: buttonForegroundColor)),
                     onPressed: () async {
-                      var loginSuccess = await model.login(model.uriController.text, model.apiKeyController.text);
+                      var loginSuccess = await model.login(
+                          model.uriController.text, model.userNameController.text, model.passwordController.text);
                       if (loginSuccess) {
                         _navigationService.navigateAndReplaceTo(HomeView.routeName);
                       }

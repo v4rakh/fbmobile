@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import 'core/repositories/file_repository.dart';
+import 'core/repositories/user_repository.dart';
 import 'core/services/api.dart';
 import 'core/services/dialog_service.dart';
 import 'core/services/file_service.dart';
@@ -10,6 +11,7 @@ import 'core/services/permission_service.dart';
 import 'core/services/refresh_service.dart';
 import 'core/services/session_service.dart';
 import 'core/services/storage_service.dart';
+import 'core/services/user_service.dart';
 import 'core/viewmodels/about_model.dart';
 import 'core/viewmodels/history_model.dart';
 import 'core/viewmodels/home_model.dart';
@@ -30,9 +32,11 @@ void setupLocator() {
   locator.registerLazySingleton(() => Api());
 
   locator.registerLazySingleton(() => FileRepository());
+  locator.registerLazySingleton(() => UserRepository());
 
   /// services
   locator.registerLazySingleton(() => SessionService());
+  locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => FileService());
   locator.registerLazySingleton(() => LinkService());
   locator.registerLazySingleton(() => PermissionService());
