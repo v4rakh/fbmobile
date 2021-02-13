@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.0+6
+* Only copy multipaste link if multi box checked
+* Add copy to clipboard shortcut in history view
+
 ## 1.1.0+5
 * Replace API key login with username and password login: a valid API key will automatically be created on login
 

@@ -103,12 +103,14 @@ class UploadView extends StatelessWidget {
                                           ),
                                           color: primaryAccentColor,
                                           onPressed: () async {
-                                            List<String> items = await model.upload();
+                                            Map<String, bool> items = await model.upload();
 
                                             if (items != null) {
                                               var clipboardContent = '';
-                                              items.forEach((element) {
-                                                clipboardContent += '$url/$element\n';
+                                              items.forEach((id, isMulti) {
+                                                if (isMulti && model.createMulti || !isMulti && !model.createMulti) {
+                                                  clipboardContent += '$url/$id\n';
+                                                }
                                               });
 
                                               FlutterClipboard.copy(clipboardContent).then((value) {

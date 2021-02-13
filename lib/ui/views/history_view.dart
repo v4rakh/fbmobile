@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -33,7 +34,7 @@ class HistoryView extends StatelessWidget {
               : (model.errorMessage == null
                   ? Container(
                       padding: EdgeInsets.all(0),
-                      child: RefreshIndicator(onRefresh: () => model.getHistory(), child: _render(model, url)))
+                      child: RefreshIndicator(onRefresh: () => model.getHistory(), child: _render(model, url, context)))
                   : Container(
                       padding: EdgeInsets.all(25),
                       child: CenteredErrorRow(
@@ -43,7 +44,7 @@ class HistoryView extends StatelessWidget {
     );
   }
 
-  Widget _render(HistoryModel model, String url) {
+  Widget _render(HistoryModel model, String url, BuildContext context) {
     List<Widget> cards = List<Widget>();
 
     if (model.pastes.length > 0) {
@@ -62,6 +63,27 @@ class HistoryView extends StatelessWidget {
           title: Text(translate('history.open_link')),
           trailing: openInBrowserButton,
         );
+
+        var copyWidget = ListTile(
+            title: Text(translate('history.copy_link.description')),
+            trailing: IconButton(
+                icon: Icon(Icons.copy, color: Colors.blue, textDirection: TextDirection.ltr),
+                onPressed: () {
+                  FlutterClipboard.copy(fullPasteUrl).then((value) {
+                    final snackBar = SnackBar(
+                      action: SnackBarAction(
+                        label: translate('history.copy_link.dismiss'),
+                        textColor: Colors.blue,
+                        onPressed: () {
+                          Scaffold.of(context).hideCurrentSnackBar();
+                        },
+                      ),
+                      content: Text(translate('history.copy_link.copied')),
+                      duration: Duration(seconds: 10),
+                    );
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  });
+                }));
 
         var deleteWidget = ListTile(
             title: Text(translate('history.delete')),
@@ -105,6 +127,7 @@ class HistoryView extends StatelessWidget {
 
         widgets.add(dateWidget);
         widgets.add(linkWidget);
+        widgets.add(copyWidget);
         widgets.add(deleteWidget);
 
         var expandable = ExpandableTheme(

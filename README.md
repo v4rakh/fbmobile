@@ -2,6 +2,8 @@
 
 A mobile flutter app for [FileBin](https://github.com/Bluewind/filebin).
 
+Available on the [Play Store](https://play.google.com/store/apps/details?id=de.varakh.fbmobile).
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

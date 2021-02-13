@@ -146,11 +146,11 @@ class UploadModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
-  Future<List<String>> upload() async {
+  Future<Map<String, bool>> upload() async {
     setState(ViewState.Busy);
     setStateMessage(translate('upload.uploading_now'));
 
-    List<String> uploadedPasteIds = [];
+    Map<String, bool> uploadedPasteIds = new Map();
     try {
       List<File> files;
       Map<String, String> additionalFiles;
@@ -165,11 +165,13 @@ class UploadModel extends BaseModel {
       }
 
       UploadedResponse response = await _fileService.upload(files, additionalFiles);
-      uploadedPasteIds.addAll(response.data.ids);
+      response.data.ids.forEach((element) {
+        uploadedPasteIds.putIfAbsent(element, () => false);
+      });
 
       if (createMulti && response.data.ids.length > 1) {
         UploadedMultiResponse multiResponse = await _fileService.createMulti(response.data.ids);
-        uploadedPasteIds.add(multiResponse.data.urlId);
+        uploadedPasteIds.putIfAbsent(multiResponse.data.urlId, () => true);
       }
 
       clearCachedFiles();

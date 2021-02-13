@@ -71,6 +71,11 @@
     "link": "Link",
     "date": "Date",
     "open_link": "Open in browser",
+    "copy_link": {
+      "description": "Copy link",
+      "dismiss": "Dismiss",
+      "copied": "Copied link to clipboard."
+    },
     "mimetype": "Mimetype",
     "delete": "Delete permanently",
     "multipaste_element": "Included as multipaste item",
