@@ -50,24 +50,39 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double yourWidth = width / 3;
-    double yourHeight = 70;
+    double yourHeight = 55;
 
     List<Widget> _tabsButton = [
       Container(
           width: yourWidth,
           height: yourHeight,
           alignment: Alignment.center,
-          child: Tab(icon: Icon(Icons.upload_rounded), text: translate('tabs.upload'))),
+          child: Tab(
+              icon: Icon(
+                Icons.upload_file,
+                color: _currentTabIndex == 0 ? Colors.blue : primaryAccentColor,
+              ),
+              text: translate('tabs.upload'))),
       Container(
           width: yourWidth,
           height: yourHeight,
           alignment: Alignment.center,
-          child: Tab(icon: Icon(Icons.history), text: translate('tabs.history'))),
+          child: Tab(
+              icon: Icon(
+                Icons.history,
+                color: _currentTabIndex == 1 ? Colors.blue : primaryAccentColor,
+              ),
+              text: translate('tabs.history'))),
       Container(
           width: yourWidth,
           height: yourHeight,
           alignment: Alignment.center,
-          child: Tab(icon: Icon(Icons.person), text: translate('tabs.profile'))),
+          child: Tab(
+              icon: Icon(
+                Icons.person,
+                color: _currentTabIndex == 2 ? Colors.blue : primaryAccentColor,
+              ),
+              text: translate('tabs.profile'))),
     ];
 
     return Scaffold(
@@ -76,6 +91,8 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
           child: TabBar(
         indicatorSize: TabBarIndicatorSize.label,
         labelColor: primaryAccentColor,
+        indicatorColor: Colors.blue,
+        indicatorWeight: 3.0,
         labelPadding: EdgeInsets.all(0),
         tabs: _tabsButton,
         isScrollable: true,

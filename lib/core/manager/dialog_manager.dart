@@ -31,7 +31,7 @@ class _DialogManagerState extends State<DialogManager> {
     List<Widget> actions = <Widget>[];
 
     if (request.buttonTitleDeny != null && request.buttonTitleDeny.isNotEmpty) {
-      Widget denyBtn = FlatButton(
+      Widget denyBtn = TextButton(
         child: Text(request.buttonTitleDeny),
         onPressed: () {
           _dialogService.dialogComplete(DialogResponse(confirmed: false));
@@ -40,7 +40,7 @@ class _DialogManagerState extends State<DialogManager> {
       actions.add(denyBtn);
     }
 
-    Widget confirmBtn = FlatButton(
+    Widget confirmBtn = TextButton(
       child: Text(request.buttonTitleAccept),
       onPressed: () {
         _dialogService.dialogComplete(DialogResponse(confirmed: true));

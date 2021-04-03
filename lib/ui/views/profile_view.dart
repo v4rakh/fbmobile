@@ -57,16 +57,12 @@ class ProfileView extends StatelessWidget {
                     UIHelper.verticalSpaceMedium(),
                     Padding(
                         padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-                        child: RaisedButton.icon(
+                        child: ElevatedButton.icon(
                             icon: Icon(Icons.remove_red_eye, color: Colors.blue),
                             label: Text(
                               translate('profile.reveal_api_key'),
                               style: TextStyle(color: buttonForegroundColor),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            color: primaryAccentColor,
                             onPressed: () {
                               return model.revealApiKey(apiKey);
                             })),

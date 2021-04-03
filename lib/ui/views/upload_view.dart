@@ -62,29 +62,27 @@ class UploadView extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                                 child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [Text(translate('upload.and_or'))])),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    RaisedButton.icon(
+                                    ElevatedButton.icon(
                                         icon: Icon(Icons.file_copy_sharp, color: Colors.blue),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(24),
-                                        ),
-                                        color: primaryAccentColor,
                                         onPressed: () => model.openFileExplorer(),
                                         label: Text(
                                           translate('upload.open_file_explorer'),
                                           style: TextStyle(color: buttonForegroundColor),
                                         )),
-                                    RaisedButton.icon(
+                                    ElevatedButton.icon(
                                         icon: Icon(Icons.cancel, color: Colors.orange),
                                         onPressed: model.paths != null && model.paths.length > 0
                                             ? () => model.clearCachedFiles()
                                             : null,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(24),
-                                        ),
-                                        color: primaryAccentColor,
                                         label: Text(
                                           translate('upload.clear_temporary_files'),
                                           style: TextStyle(color: buttonForegroundColor),
@@ -95,13 +93,21 @@ class UploadView extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Checkbox(
+                                        value: model.createMulti,
+                                        onChanged: (v) => model.toggleCreateMulti(),
+                                      ),
+                                      Text(translate('upload.multipaste')),
+                                    ])),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      RaisedButton.icon(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(24),
-                                          ),
-                                          color: primaryAccentColor,
+                                      ElevatedButton.icon(
                                           onPressed: () async {
                                             Map<String, bool> items = await model.upload();
 
@@ -119,13 +125,13 @@ class UploadView extends StatelessWidget {
                                                     label: translate('upload.dismiss'),
                                                     textColor: Colors.blue,
                                                     onPressed: () {
-                                                      Scaffold.of(context).hideCurrentSnackBar();
+                                                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                     },
                                                   ),
                                                   content: Text(translate('upload.uploaded')),
                                                   duration: Duration(seconds: 10),
                                                 );
-                                                Scaffold.of(context).showSnackBar(snackBar);
+                                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               });
                                             }
                                           },
@@ -134,15 +140,6 @@ class UploadView extends StatelessWidget {
                                             translate('upload.upload'),
                                             style: TextStyle(color: buttonForegroundColor),
                                           )),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            value: model.createMulti,
-                                            onChanged: (v) => model.toggleCreateMulti(),
-                                          ),
-                                          Text(translate('upload.multipaste')),
-                                        ],
-                                      )
                                     ])),
                             model.errorMessage != null && model.errorMessage.isNotEmpty
                                 ? (Padding(

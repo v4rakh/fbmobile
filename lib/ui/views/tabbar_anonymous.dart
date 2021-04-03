@@ -18,7 +18,7 @@ class AnonymousTabBarState extends State<AnonymousTabBarView> with SingleTickerP
   List<Widget> _tabPages = [LoginView()];
   List<bool> _hasInit = [true];
 
-  List<Widget> _tabsButton = [Tab(icon: Icon(Icons.person_outline), text: translate('tabs.login'))];
+  List<Widget> _tabsButton = [Tab(icon: Icon(Icons.person_outline, color: Colors.blue), text: translate('tabs.login'))];
 
   @override
   void initState() {
@@ -49,6 +49,8 @@ class AnonymousTabBarState extends State<AnonymousTabBarView> with SingleTickerP
       bottomNavigationBar: BottomAppBar(
         child: TabBar(
           labelColor: primaryAccentColor,
+          indicatorColor: Colors.blue,
+          indicatorWeight: 3.0,
           tabs: _tabsButton,
           controller: _tabController,
         ),

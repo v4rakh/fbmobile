@@ -71,12 +71,7 @@ class _LoginViewState extends State<LoginView> {
                     usernameController: model.userNameController,
                     passwordController: model.passwordController,
                   ),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    padding: EdgeInsets.all(12),
-                    color: primaryAccentColor,
+                  ElevatedButton(
                     child: Text(translate('login.button'), style: TextStyle(color: buttonForegroundColor)),
                     onPressed: () async {
                       var loginSuccess = await model.login(

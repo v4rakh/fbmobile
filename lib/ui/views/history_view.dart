@@ -45,7 +45,7 @@ class HistoryView extends StatelessWidget {
   }
 
   Widget _render(HistoryModel model, String url, BuildContext context) {
-    List<Widget> cards = List<Widget>();
+    List<Widget> cards = [];
 
     if (model.pastes.length > 0) {
       model.pastes.reversed.forEach((paste) {
@@ -75,13 +75,13 @@ class HistoryView extends StatelessWidget {
                         label: translate('history.copy_link.dismiss'),
                         textColor: Colors.blue,
                         onPressed: () {
-                          Scaffold.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         },
                       ),
                       content: Text(translate('history.copy_link.copied')),
                       duration: Duration(seconds: 10),
                     );
-                    Scaffold.of(context).showSnackBar(snackBar);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   });
                 }));
 

@@ -22,10 +22,11 @@
     "login": "Login",
     "history": "History",
     "profile": "Profile",
-    "upload": "Upload"
+    "upload": "New"
   },
   "upload": {
-    "open_file_explorer": "Select...",
+    "and_or": "and/or",
+    "open_file_explorer": "Select file(s)...",
     "clear_temporary_files": "Clear",
     "text_to_be_pasted": "Text...",
     "upload": "Upload",
@@ -33,7 +34,7 @@
     "file_explorer_open": "Selecting files...",
     "uploaded": "Uploaded! Copied links to clipboard.",
     "dismiss": "Dismiss",
-    "multipaste": "multipaste",
+    "multipaste": "Combine to a multipaste upload",
     "errors": {
       "not_found": "Not found",
       "retrieval_intent": "An error occurred while retrieving shared data"
