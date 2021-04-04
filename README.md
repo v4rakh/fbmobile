@@ -32,7 +32,7 @@ Start by installing dependencies and generating entities!
 ### Working versions for SDK
 
 ```
-[✓] Flutter (Channel stable, 1.22.6, on Linux, locale en_US.UTF-8)
+[✓] Flutter (Channel stable, 2.0.4, on Linux, locale de_DE.UTF-8)
 [✓] Android toolchain - develop for Android devices (Android SDK version 29.0.3)
 ```
 

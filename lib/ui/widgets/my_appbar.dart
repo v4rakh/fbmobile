@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../shared/app_colors.dart';
 import '../widgets/about_iconbutton.dart';
 
 class MyAppBar extends AppBar {
@@ -7,7 +8,12 @@ class MyAppBar extends AppBar {
   static final List<Widget> aboutDisabledWidgets = [];
 
   MyAppBar({Key key, Widget title, List<Widget> actionWidgets, bool enableAbout = true})
-      : super(key: key, title: Row(children: <Widget>[title]), actions: _renderIconButtons(actionWidgets, enableAbout));
+      : super(
+            key: key,
+            title: Row(children: <Widget>[title]),
+            actions: _renderIconButtons(actionWidgets, enableAbout),
+            brightness: Brightness.dark,
+            backgroundColor: primaryAccentColor);
 
   static List<Widget> _renderIconButtons(List<Widget> actionWidgets, bool aboutEnabled) {
     if (actionWidgets == null) {

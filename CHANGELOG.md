@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.2.2+8
+* Adapt status bar color to match app's theme
+
 ## 1.2.1+7
 * Improve visual differences between the Upload tab and the upload button
 * Improved visuals in bottom tab bar
