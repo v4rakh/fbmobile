@@ -9,4 +9,7 @@ enum ErrorCode {
 
   /// A REST error (response code wasn't 200 or 204)
   REST_ERROR,
+
+  /// Custom errors
+  INVALID_API_KEY
 }

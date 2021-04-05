@@ -34,7 +34,7 @@ class HistoryModel extends BaseModel {
   String errorMessage;
 
   void init() {
-    this._refreshTriggerSubscription = _refreshService.refreshHistoryController.stream.listen((event) {
+    _refreshTriggerSubscription = _refreshService.refreshHistoryController.stream.listen((event) {
       if (event == RefreshEvent.RefreshHistory) {
         _logger.d('History needs a refresh');
         getHistory();

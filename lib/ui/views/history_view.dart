@@ -67,13 +67,13 @@ class HistoryView extends StatelessWidget {
         var copyWidget = ListTile(
             title: Text(translate('history.copy_link.description')),
             trailing: IconButton(
-                icon: Icon(Icons.copy, color: Colors.blue, textDirection: TextDirection.ltr),
+                icon: Icon(Icons.copy, color: blueColor, textDirection: TextDirection.ltr),
                 onPressed: () {
                   FlutterClipboard.copy(fullPasteUrl).then((value) {
                     final snackBar = SnackBar(
                       action: SnackBarAction(
                         label: translate('history.copy_link.dismiss'),
-                        textColor: Colors.blue,
+                        textColor: blueColor,
                         onPressed: () {
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         },
@@ -88,7 +88,7 @@ class HistoryView extends StatelessWidget {
         var deleteWidget = ListTile(
             title: Text(translate('history.delete')),
             trailing: IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
+                icon: Icon(Icons.delete, color: redColor),
                 onPressed: () {
                   return model.deletePaste(paste.id);
                 }));
@@ -135,14 +135,14 @@ class HistoryView extends StatelessWidget {
               iconPlacement: ExpandablePanelIconPlacement.right,
               headerAlignment: ExpandablePanelHeaderAlignment.center,
               hasIcon: true,
-              iconColor: Colors.blue,
+              iconColor: blueColor,
               tapHeaderToExpand: true),
           child: ExpandablePanel(
             header: InkWell(
                 onLongPress: () => model.deletePaste(paste.id),
                 child: Text(
                   paste.id,
-                  style: TextStyle(color: Colors.blue),
+                  style: TextStyle(color: blueColor),
                   textAlign: TextAlign.left,
                 )),
             expanded: Column(
@@ -158,7 +158,7 @@ class HistoryView extends StatelessWidget {
             trailing: Wrap(children: [
               openInBrowserButton,
               IconButton(
-                  icon: Icon(Icons.share, color: Colors.blue, textDirection: TextDirection.ltr),
+                  icon: Icon(Icons.share, color: blueColor, textDirection: TextDirection.ltr),
                   onPressed: () {
                     return Share.share(fullPasteUrl);
                   })
@@ -184,7 +184,7 @@ class HistoryView extends StatelessWidget {
 
   Widget _renderOpenInBrowser(HistoryModel model, String url) {
     return IconButton(
-        icon: Icon(Icons.open_in_new, color: Colors.blue, textDirection: TextDirection.ltr),
+        icon: Icon(Icons.open_in_new, color: blueColor, textDirection: TextDirection.ltr),
         onPressed: () {
           return model.openLink(url);
         });

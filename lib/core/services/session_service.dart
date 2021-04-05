@@ -4,7 +4,6 @@ import 'package:logger/logger.dart';
 
 import '../../core/services/stoppable_service.dart';
 import '../../locator.dart';
-import '../models/rest/config.dart';
 import '../models/session.dart';
 import '../services/storage_service.dart';
 import '../util/logger.dart';
@@ -17,11 +16,22 @@ class SessionService extends StoppableService {
 
   StreamController<Session> sessionController = StreamController<Session>();
 
-  Future<bool> login(String url, String apiKey, Config config) async {
+  void setApiConfig(String url, String apiKey) {
+    _logger.d('Setting API config for session');
     _api.setUrl(url);
     _api.addApiKeyAuthorization(apiKey);
+  }
 
-    var session = new Session(url: url, apiKey: apiKey, config: config);
+  void unsetApiConfig() {
+    _logger.d('Removing API config');
+    _api.removeApiKeyAuthorization();
+    _api.removeUrl();
+  }
+
+  Future<bool> login(String url, String apiKey) async {
+    setApiConfig(url, apiKey);
+
+    var session = new Session(url: url, apiKey: apiKey);
     sessionController.add(session);
     await _storageService.storeSession(session);
     _logger.d('Session created');
@@ -29,9 +39,7 @@ class SessionService extends StoppableService {
   }
 
   Future<bool> logout() async {
-    _api.removeApiKeyAuthorization();
-    _api.removeUrl();
-
+    unsetApiConfig();
     sessionController.add(null);
     _logger.d('Session destroyed');
     return await _storageService.removeSession();

@@ -72,14 +72,14 @@ class UploadView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     ElevatedButton.icon(
-                                        icon: Icon(Icons.file_copy_sharp, color: Colors.blue),
+                                        icon: Icon(Icons.file_copy_sharp, color: blueColor),
                                         onPressed: () => model.openFileExplorer(),
                                         label: Text(
                                           translate('upload.open_file_explorer'),
                                           style: TextStyle(color: buttonForegroundColor),
                                         )),
                                     ElevatedButton.icon(
-                                        icon: Icon(Icons.cancel, color: Colors.orange),
+                                        icon: Icon(Icons.cancel, color: orangeColor),
                                         onPressed: model.paths != null && model.paths.length > 0
                                             ? () => model.clearCachedFiles()
                                             : null,
@@ -123,7 +123,7 @@ class UploadView extends StatelessWidget {
                                                 final snackBar = SnackBar(
                                                   action: SnackBarAction(
                                                     label: translate('upload.dismiss'),
-                                                    textColor: Colors.blue,
+                                                    textColor: blueColor,
                                                     onPressed: () {
                                                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                     },
@@ -135,7 +135,7 @@ class UploadView extends StatelessWidget {
                                               });
                                             }
                                           },
-                                          icon: Icon(Icons.upload_rounded, color: Colors.green),
+                                          icon: Icon(Icons.upload_rounded, color: greenColor),
                                           label: Text(
                                             translate('upload.upload'),
                                             style: TextStyle(color: buttonForegroundColor),

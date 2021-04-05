@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.3.0+9
+* Allow API key login
+* Revamp profile view
+* Adapt color of tab bar text and use outlined icons when active
+* Suffix the API key comment with UNIX timestamp when credential login is used
+* Fixed an error when logging out and logging back in again in the history view
+* Minor code refactor
+
 ## 1.2.2+8
 * Adapt status bar color to match app's theme
 

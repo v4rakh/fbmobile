@@ -9,7 +9,7 @@ import 'locator.dart';
 /// main entry point used to configure log level, locales, ...
 void main() async {
   setupLogger(Level.info);
-//  setupLogger(Level.debug);
+  // setupLogger(Level.debug);
   setupLocator();
 
   var delegate = await LocalizationDelegate.create(fallbackLocale: 'en', supportedLocales: ['en']);

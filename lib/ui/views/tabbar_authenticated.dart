@@ -52,37 +52,47 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
     double yourWidth = width / 3;
     double yourHeight = 55;
 
+    Color colorTabItem0 = _currentTabIndex == 0 ? blueColor : primaryAccentColor;
+    Color colorTabItem1 = _currentTabIndex == 1 ? blueColor : primaryAccentColor;
+    Color colorTabItem2 = _currentTabIndex == 2 ? blueColor : primaryAccentColor;
+
     List<Widget> _tabsButton = [
       Container(
-          width: yourWidth,
-          height: yourHeight,
-          alignment: Alignment.center,
-          child: Tab(
-              icon: Icon(
-                Icons.upload_file,
-                color: _currentTabIndex == 0 ? Colors.blue : primaryAccentColor,
-              ),
-              text: translate('tabs.upload'))),
+        width: yourWidth,
+        height: yourHeight,
+        alignment: Alignment.center,
+        child: Tab(
+          icon: Icon(
+            _currentTabIndex == 0 ? Icons.upload_outlined : Icons.upload_rounded,
+            color: colorTabItem0,
+          ),
+          child: Text(translate('tabs.upload'), style: TextStyle(color: colorTabItem0)),
+        ),
+      ),
       Container(
-          width: yourWidth,
-          height: yourHeight,
-          alignment: Alignment.center,
-          child: Tab(
-              icon: Icon(
-                Icons.history,
-                color: _currentTabIndex == 1 ? Colors.blue : primaryAccentColor,
-              ),
-              text: translate('tabs.history'))),
+        width: yourWidth,
+        height: yourHeight,
+        alignment: Alignment.center,
+        child: Tab(
+          icon: Icon(
+            _currentTabIndex == 1 ? Icons.history_outlined : Icons.history_rounded,
+            color: colorTabItem1,
+          ),
+          child: Text(translate('tabs.history'), style: TextStyle(color: colorTabItem1)),
+        ),
+      ),
       Container(
-          width: yourWidth,
-          height: yourHeight,
-          alignment: Alignment.center,
-          child: Tab(
-              icon: Icon(
-                Icons.person,
-                color: _currentTabIndex == 2 ? Colors.blue : primaryAccentColor,
-              ),
-              text: translate('tabs.profile'))),
+        width: yourWidth,
+        height: yourHeight,
+        alignment: Alignment.center,
+        child: Tab(
+          icon: Icon(
+            _currentTabIndex == 2 ? Icons.person_outlined : Icons.person_rounded,
+            color: colorTabItem2,
+          ),
+          child: Text(translate('tabs.profile'), style: TextStyle(color: colorTabItem2)),
+        ),
+      ),
     ];
 
     return Scaffold(
@@ -91,7 +101,7 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
           child: TabBar(
         indicatorSize: TabBarIndicatorSize.label,
         labelColor: primaryAccentColor,
-        indicatorColor: Colors.blue,
+        indicatorColor: blueColor,
         indicatorWeight: 3.0,
         labelPadding: EdgeInsets.all(0),
         tabs: _tabsButton,

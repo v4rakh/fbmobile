@@ -48,9 +48,10 @@
     "help": "Login",
     "compatibility_dialog": {
       "title": "How to login?",
-      "body": "A FileBin instance >= 3.5.0 and valid credentials for this instance are required."
+      "body": "A FileBin instance >= 3.5.0 is required. Enter valid user and password or switch to API key login by clicking on the icons right next to this help icon."
     },
     "url_placeholder": "https://paste.domain.tld",
+    "apikey_placeholder": "API Key",
     "username_placeholder": "Username",
     "password_placeholder": "Password",
     "button": "Login",
@@ -60,8 +61,10 @@
       "invalid_url": "Please provide a valid FileBin URL",
       "empty_username": "Please provide a username",
       "empty_password": "Please provide a password",
+      "empty_apikey": "Please provide an API key",
       "wrong_credentials": "Credentials are invalid",
-      "forbidden": "You're not allowed to access this instance"
+      "forbidden": "You're not allowed to access this instance",
+      "invalid_api_key": "You're not allowed to use this API key. Please verify that it's valid and at least has access level 'apikey'."
     }
   },
   "history": {
@@ -91,22 +94,30 @@
     }
   },
   "about": {
-    "headline": "Welcome to FileBin mobile!",
     "description": "This application is a mobile client for FileBin and it's open source. It helps you to manage your pastes.\n\nIn order to use the application, you need access to a FileBin instance.",
     "faq_headline": "F.A.Q",
     "faq": "- How do I login?\nInsert your instance URL and valid credentials you also use in the web interface of FileBin.\n\n- Why is storage permission required?\nIt's not required, but highly advised to grant it. Otherwise sharing files with the app won't work correctly and you might think that sharing has no effect.\n\n- When I am logged out, sharing files via share with the app won't list all files I selected after I login.\nPlease login before you start using the app. Account information are persisted. You only need to do it once.",
     "contact_us": "Feedback? Issues?",
-    "website": "Main application: https://github.com/Bluewind/filebin\n\nMobile: https://github.com/v4rakh/fbmobile"
+    "website": "https://github.com/Bluewind/filebin and https://github.com/v4rakh/fbmobile"
   },
   "profile": {
-    "welcome": "Hi!",
-    "connection": "You're currently connected to:\n\nURL: {url}",
-    "config": "Instance configuration:\n\nUpload max size: {uploadMaxSize}\n\nMax files per request: {maxFilesPerRequest}\n\nMax inputs vars: {maxInputVars}\n\nRequest max size: {requestMaxSize}",
+    "instance": "Instance",
+    "connection": "{url}",
+    "show_config": "Show configuration",
+    "shown_config": {
+      "title": "Configuration",
+      "description": "Upload max size: {uploadMaxSize}\n\nMax files per request: {maxFilesPerRequest}\n\nMax inputs vars: {maxInputVars}\n\nRequest max size: {requestMaxSize}",
+      "error": {
+        "title": "Error",
+        "description": "An error occurred while loading the configuration values. Reason: {message}"
+      }
+    },
     "reveal_api_key": "Reveal API key",
     "revealed_api_key": {
       "title": "API key",
       "description": "{apiKey}"
-    }
+    },
+    "logout": "Logout"
   },
   "logout": {
     "title": "Logout",

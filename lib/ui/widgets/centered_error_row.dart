@@ -21,7 +21,7 @@ class CenteredErrorRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(child: Center(child: Text(message, style: TextStyle(color: Colors.red)))),
+            Expanded(child: Center(child: Text(message, style: TextStyle(color: redColor)))),
           ],
         ),
         (retryCallback != null

@@ -1,32 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
-class LoginHeaders extends StatelessWidget {
-  final TextEditingController uriController;
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
-
-  final String validationMessage;
-
-  LoginHeaders(
-      {@required this.uriController,
-      @required this.usernameController,
-      @required this.passwordController,
-      this.validationMessage});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      this.validationMessage != null ? Text(validationMessage, style: TextStyle(color: Colors.red)) : Container(),
-      LoginTextField(uriController, translate('login.url_placeholder'), Icon(Icons.link),
-          keyboardType: TextInputType.url),
-      LoginTextField(usernameController, translate('login.username_placeholder'), Icon(Icons.person),
-          keyboardType: TextInputType.name),
-      LoginTextField(passwordController, translate('login.password_placeholder'), Icon(Icons.vpn_key),
-          obscureText: true),
-    ]);
-  }
-}
+import '../shared/app_colors.dart';
 
 class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -45,7 +19,7 @@ class LoginTextField extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       height: 50.0,
       alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+      decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(10.0)),
       child: TextFormField(
           keyboardType: keyboardType,
           obscureText: obscureText,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-const Color backgroundColor = Colors.white;
+const Color backgroundColor = whiteColor;
 
 /// Colors
-const Color primaryBackgroundColor = Colors.white;
+const Color primaryBackgroundColor = whiteColor;
 
 const Map<int, Color> colors = {
   50: Color.fromRGBO(63, 69, 75, .1),
@@ -20,4 +20,10 @@ const Map<int, Color> colors = {
 const MaterialColor myColor = MaterialColor(0xFF3F454B, colors);
 const Color primaryAccentColor = myColor;
 const Color buttonBackgroundColor = primaryAccentColor;
-const Color buttonForegroundColor = Colors.white;
+const Color buttonForegroundColor = whiteColor;
+
+const Color blueColor = Colors.blue;
+const Color whiteColor = Colors.white;
+const Color redColor = Colors.red;
+const Color orangeColor = Colors.orange;
+const Color greenColor = Colors.green;

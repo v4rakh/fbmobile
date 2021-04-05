@@ -37,7 +37,7 @@ class AboutView extends StatelessWidget {
                   padding: EdgeInsets.all(0),
                   child: ListView(
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10, top: 10),
                     children: <Widget>[
                       UIHelper.verticalSpaceMedium(),
                       Center(child: logo),

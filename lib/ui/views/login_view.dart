@@ -10,17 +10,14 @@ import '../../ui/shared/text_styles.dart';
 import '../../ui/views/home_view.dart';
 import '../../ui/widgets/my_appbar.dart';
 import '../shared/app_colors.dart';
-import '../widgets/login_header.dart';
+import '../shared/ui_helpers.dart';
+import '../widgets/login_header_apikey.dart';
+import '../widgets/login_header_credentials.dart';
 import 'base_view.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   static const routeName = '/login';
 
-  @override
-  _LoginViewState createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 
@@ -30,7 +27,7 @@ class _LoginViewState extends State<LoginView> {
       tag: 'hero',
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 96.0,
+        radius: 36.0,
         child: Image.asset('assets/logo_caption.png'),
       ),
     );
@@ -44,9 +41,11 @@ class _LoginViewState extends State<LoginView> {
             ? Center(child: CircularProgressIndicator())
             : ListView(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 children: <Widget>[
+                  UIHelper.verticalSpaceMedium(),
                   Center(child: logo),
+                  UIHelper.verticalSpaceMedium(),
                   Center(
                       child: Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
@@ -63,19 +62,32 @@ class _LoginViewState extends State<LoginView> {
                                 title: translate('login.compatibility_dialog.title'),
                                 description: translate('login.compatibility_dialog.body'));
                           },
+                        ),
+                        InkWell(
+                          child:
+                              Icon(model.useCredentialsLogin ? Icons.person_outline : Icons.vpn_key, color: blueColor),
+                          onTap: () {
+                            model.toggleLoginMethod();
+                          },
                         )
                       ])),
-                  LoginHeaders(
-                    validationMessage: model.errorMessage,
-                    uriController: model.uriController,
-                    usernameController: model.userNameController,
-                    passwordController: model.passwordController,
-                  ),
+                  UIHelper.verticalSpaceMedium(),
+                  model.useCredentialsLogin
+                      ? LoginCredentialsHeaders(
+                          validationMessage: model.errorMessage,
+                          uriController: model.uriController,
+                          usernameController: model.userNameController,
+                          passwordController: model.passwordController,
+                        )
+                      : LoginApiKeyHeaders(
+                          validationMessage: model.errorMessage,
+                          uriController: model.uriController,
+                          apiKeyController: model.apiKeyController),
+                  UIHelper.verticalSpaceMedium(),
                   ElevatedButton(
                     child: Text(translate('login.button'), style: TextStyle(color: buttonForegroundColor)),
                     onPressed: () async {
-                      var loginSuccess = await model.login(
-                          model.uriController.text, model.userNameController.text, model.passwordController.text);
+                      var loginSuccess = await model.login();
                       if (loginSuccess) {
                         _navigationService.navigateAndReplaceTo(HomeView.routeName);
                       }
