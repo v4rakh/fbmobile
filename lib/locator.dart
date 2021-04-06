@@ -11,6 +11,7 @@ import 'core/services/permission_service.dart';
 import 'core/services/refresh_service.dart';
 import 'core/services/session_service.dart';
 import 'core/services/storage_service.dart';
+import 'core/services/swipe_service.dart';
 import 'core/services/user_service.dart';
 import 'core/viewmodels/about_model.dart';
 import 'core/viewmodels/history_model.dart';
@@ -41,6 +42,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => LinkService());
   locator.registerLazySingleton(() => PermissionService());
   locator.registerLazySingleton(() => RefreshService());
+  locator.registerLazySingleton(() => SwipeService());
 
   /// view models
   locator.registerFactory(() => StartUpViewModel());

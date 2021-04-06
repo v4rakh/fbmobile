@@ -31,6 +31,8 @@ class UploadModel extends BaseModel {
   final RefreshService _refreshService = locator<RefreshService>();
 
   TextEditingController _pasteTextController = TextEditingController();
+  bool pasteTextTouched = false;
+
   StreamSubscription _intentDataStreamSubscription;
 
   bool createMulti = false;
@@ -43,10 +45,15 @@ class UploadModel extends BaseModel {
   TextEditingController get pasteTextController => _pasteTextController;
 
   void init() {
+    _pasteTextController.addListener(() {
+      pasteTextTouched = pasteTextController.text.isNotEmpty;
+      setStateValue("PASTE_TEXT_TOUCHED", pasteTextTouched);
+    });
+
     // For sharing images coming from outside the app while the app is in the memory
     _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream().listen((List<SharedMediaFile> value) {
       if (value != null && value.length > 0) {
-        setState(ViewState.Busy);
+        setStateView(ViewState.Busy);
         paths = value.map((sharedFile) {
           return PlatformFile.fromMap({
             'path': sharedFile.path,
@@ -55,19 +62,19 @@ class UploadModel extends BaseModel {
             'bytes': null
           });
         }).toList();
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
       }
     }, onError: (err) {
-      setState(ViewState.Busy);
+      setStateView(ViewState.Busy);
       errorMessage = translate('upload.retrieval_intent');
       _logger.e('Error while retrieving shared data: $err');
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
     });
 
     // For sharing images coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
       if (value != null && value.length > 0) {
-        setState(ViewState.Busy);
+        setStateView(ViewState.Busy);
         paths = value.map((sharedFile) {
           return PlatformFile.fromMap({
             'path': sharedFile.path,
@@ -76,42 +83,42 @@ class UploadModel extends BaseModel {
             'bytes': null
           });
         }).toList();
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
       }
     });
 
     // For sharing or opening urls/text coming from outside the app while the app is in the memory
     _intentDataStreamSubscription = ReceiveSharingIntent.getTextStream().listen((String value) {
       if (value != null && value.isNotEmpty) {
-        setState(ViewState.Busy);
+        setStateView(ViewState.Busy);
         pasteTextController.text = value;
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
       }
     }, onError: (err) {
-      setState(ViewState.Busy);
+      setStateView(ViewState.Busy);
       errorMessage = translate('upload.retrieval_intent');
       _logger.e('Error while retrieving shared data: $err');
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
     });
 
     // For sharing or opening urls/text coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialText().then((String value) {
       if (value != null && value.isNotEmpty) {
-        setState(ViewState.Busy);
+        setStateView(ViewState.Busy);
         pasteTextController.text = value;
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
       }
     });
   }
 
   void toggleCreateMulti() {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     createMulti = !createMulti;
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   void openFileExplorer() async {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     setStateMessage(translate('upload.file_explorer_open'));
     loadingPath = true;
 
@@ -134,20 +141,20 @@ class UploadModel extends BaseModel {
     fileName = paths != null ? paths.map((e) => e.name).toString() : '...';
 
     setStateMessage(null);
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   void clearCachedFiles() async {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     await FilePicker.platform.clearTemporaryFiles();
     paths = null;
     fileName = null;
     errorMessage = null;
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   Future<Map<String, bool>> upload() async {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     setStateMessage(translate('upload.uploading_now'));
 
     Map<String, bool> uploadedPasteIds = new Map();
@@ -204,14 +211,14 @@ class UploadModel extends BaseModel {
       } else {
         errorMessage = translate('app.unknown_error');
         setStateMessage(null);
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         _logger.e('An unknown error occurred', e);
         throw e;
       }
     }
 
     setStateMessage(null);
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
     return null;
   }
 

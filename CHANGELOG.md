@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.1+10
+* Added gesture detection for tab bar
+* Disable upload when no files have been attached or upload text input is empty
+* Added version information to about view
+* Minor refactor regarding state management
+
 ## 1.3.0+9
 * Allow API key login
 * Revamp profile view

@@ -43,23 +43,23 @@ class LoginModel extends BaseModel {
   String errorMessage;
 
   void toggleLoginMethod() {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     useCredentialsLogin = !useCredentialsLogin;
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   void init() async {
     bool hasLastUrl = await _storageService.hasLastUrl();
 
     if (hasLastUrl) {
-      setState(ViewState.Busy);
+      setStateView(ViewState.Busy);
       var s = await _storageService.retrieveLastUrl();
 
       if (s.isNotEmpty) {
         _uriController = new TextEditingController(text: s);
       }
 
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
     }
   }
 
@@ -69,45 +69,45 @@ class LoginModel extends BaseModel {
     var password = passwordController.text;
     var apiKey = apiKeyController.text;
 
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     url = trim(url);
     username = trim(username);
 
     if (url.isEmpty) {
       errorMessage = translate('login.errors.empty_url');
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
       return false;
     }
 
     if (!url.contains("https://") && !url.contains("http://")) {
       errorMessage = translate('login.errors.no_protocol');
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
       return false;
     }
 
     bool validUri = Uri.parse(url).isAbsolute;
     if (!validUri || !isURL(url)) {
       errorMessage = translate('login.errors.invalid_url');
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
       return false;
     }
 
     if (useCredentialsLogin) {
       if (username.isEmpty) {
         errorMessage = translate('login.errors.empty_username');
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         return false;
       }
 
       if (password.isEmpty) {
         errorMessage = translate('login.errors.empty_password');
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         return false;
       }
     } else {
       if (apiKey.isEmpty) {
         errorMessage = translate('login.errors.empty_apikey');
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         return false;
       }
     }
@@ -147,7 +147,7 @@ class LoginModel extends BaseModel {
       } else {
         errorMessage = translate('app.unknown_error');
         _sessionService.logout();
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         _logger.e('An unknown error occurred', e);
         throw e;
       }
@@ -156,7 +156,7 @@ class LoginModel extends BaseModel {
         _sessionService.logout();
       }
 
-      setState(ViewState.Idle);
+      setStateView(ViewState.Idle);
       return success;
     }
 

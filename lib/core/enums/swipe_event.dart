@@ -1,0 +1,1 @@
+enum SwipeEvent { Left, Right }

@@ -12,6 +12,7 @@ import '../../core/viewmodels/history_model.dart';
 import '../../ui/widgets/centered_error_row.dart';
 import '../shared/app_colors.dart';
 import '../widgets/my_appbar.dart';
+import '../widgets/swipe_navigation.dart';
 import 'base_view.dart';
 
 class HistoryView extends StatelessWidget {
@@ -19,8 +20,6 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var url = Provider.of<Session>(context).url;
-
     return BaseView<HistoryModel>(
       onModelReady: (model) {
         model.init();
@@ -29,22 +28,28 @@ class HistoryView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
           appBar: MyAppBar(title: Text(translate('titles.history'))),
           backgroundColor: backgroundColor,
-          body: model.state == ViewState.Busy
-              ? Center(child: CircularProgressIndicator())
-              : (model.errorMessage == null
-                  ? Container(
-                      padding: EdgeInsets.all(0),
-                      child: RefreshIndicator(onRefresh: () => model.getHistory(), child: _render(model, url, context)))
-                  : Container(
-                      padding: EdgeInsets.all(25),
-                      child: CenteredErrorRow(
-                        model.errorMessage,
-                        retryCallback: () => model.getHistory(),
-                      )))),
+          body: SwipeNavigation(child: _render(model, context))),
     );
   }
 
-  Widget _render(HistoryModel model, String url, BuildContext context) {
+  Widget _render(HistoryModel model, BuildContext context) {
+    var url = Provider.of<Session>(context).url;
+
+    return model.state == ViewState.Busy
+        ? Center(child: CircularProgressIndicator())
+        : (model.errorMessage == null
+            ? Container(
+                padding: EdgeInsets.all(0),
+                child: RefreshIndicator(onRefresh: () => model.getHistory(), child: _renderItems(model, url, context)))
+            : Container(
+                padding: EdgeInsets.all(25),
+                child: CenteredErrorRow(
+                  model.errorMessage,
+                  retryCallback: () => model.getHistory(),
+                )));
+  }
+
+  Widget _renderItems(HistoryModel model, String url, BuildContext context) {
     List<Widget> cards = [];
 
     if (model.pastes.length > 0) {

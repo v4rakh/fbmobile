@@ -67,7 +67,7 @@ class ProfileModel extends BaseModel {
       } else {
         errorMessage = translate('app.unknown_error');
         _sessionService.logout();
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         _logger.e('An unknown error occurred', e);
         throw e;
       }

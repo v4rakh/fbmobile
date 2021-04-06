@@ -25,6 +25,7 @@ class AboutView extends StatelessWidget {
     );
 
     return BaseView<AboutModel>(
+      onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
           appBar: MyAppBar(
             title: Text(translate('titles.about')),
@@ -44,12 +45,22 @@ class AboutView extends StatelessWidget {
                       UIHelper.verticalSpaceMedium(),
                       Center(
                           child: Text(
-                        translate(('about.description')),
+                        translate('about.versions', args: {
+                          'appName': model.packageInfo.appName,
+                          'packageName': model.packageInfo.packageName,
+                          'version': model.packageInfo.version,
+                          'buildNumber': model.packageInfo.buildNumber
+                        }),
                       )),
                       UIHelper.verticalSpaceMedium(),
                       Center(
                           child: Text(
-                        translate(('about.faq_headline')),
+                        translate('about.description'),
+                      )),
+                      UIHelper.verticalSpaceMedium(),
+                      Center(
+                          child: Text(
+                        translate('about.faq_headline'),
                         style: subHeaderStyle,
                       )),
                       Center(
@@ -59,7 +70,7 @@ class AboutView extends StatelessWidget {
                       UIHelper.verticalSpaceMedium(),
                       Center(
                           child: Text(
-                        translate(('about.contact_us')),
+                        translate('about.contact_us'),
                         style: subHeaderStyle,
                       )),
                       UIHelper.verticalSpaceSmall(),

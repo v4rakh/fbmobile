@@ -94,6 +94,7 @@
     }
   },
   "about": {
+    "versions": "{appName} ({packageName}) {version}+{buildNumber}",
     "description": "This application is a mobile client for FileBin and it's open source. It helps you to manage your pastes.\n\nIn order to use the application, you need access to a FileBin instance.",
     "faq_headline": "F.A.Q",
     "faq": "- How do I login?\nInsert your instance URL and valid credentials you also use in the web interface of FileBin.\n\n- Why is storage permission required?\nIt's not required, but highly advised to grant it. Otherwise sharing files with the app won't work correctly and you might think that sharing has no effect.\n\n- When I am logged out, sharing files via share with the app won't list all files I selected after I login.\nPlease login before you start using the app. Account information are persisted. You only need to do it once.",

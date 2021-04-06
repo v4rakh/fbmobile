@@ -34,7 +34,7 @@ class HistoryModel extends BaseModel {
   String errorMessage;
 
   void init() {
-    _refreshTriggerSubscription = _refreshService.refreshHistoryController.stream.listen((event) {
+    _refreshTriggerSubscription = _refreshService.refreshEventController.stream.listen((event) {
       if (event == RefreshEvent.RefreshHistory) {
         _logger.d('History needs a refresh');
         getHistory();
@@ -43,7 +43,7 @@ class HistoryModel extends BaseModel {
   }
 
   Future getHistory() async {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
 
     try {
       pastes.clear();
@@ -103,13 +103,13 @@ class HistoryModel extends BaseModel {
         errorMessage = translate('api.socket_timeout');
       } else {
         errorMessage = translate('app.unknown_error');
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         _logger.e('An unknown error occurred', e);
         throw e;
       }
     }
 
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   Future deletePaste(String id) async {
@@ -123,7 +123,7 @@ class HistoryModel extends BaseModel {
       return;
     }
 
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
 
     try {
       await _fileService.deletePaste(id);
@@ -149,13 +149,13 @@ class HistoryModel extends BaseModel {
         errorMessage = translate('api.socket_timeout');
       } else {
         errorMessage = translate('app.unknown_error');
-        setState(ViewState.Idle);
+        setStateView(ViewState.Idle);
         _logger.e('An unknown error occurred', e);
         throw e;
       }
     }
 
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 
   void openLink(String link) {

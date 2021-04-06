@@ -1,7 +1,15 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:logger/logger.dart';
 
+import '../../core/enums/swipe_event.dart';
+import '../../core/services/swipe_service.dart';
+import '../../core/util/logger.dart';
+import '../../locator.dart';
 import '../shared/app_colors.dart';
 import 'history_view.dart';
 import 'profile_view.dart';
@@ -13,6 +21,10 @@ class AuthenticatedTabBarView extends StatefulWidget {
 }
 
 class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with SingleTickerProviderStateMixin {
+  final Logger _logger = getLogger();
+  final SwipeService _swipeService = locator<SwipeService>();
+
+  StreamSubscription _swipeEventSubscription;
   TabController _tabController;
   int _currentTabIndex = 0;
 
@@ -38,11 +50,28 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
           setState(() => _currentTabIndex = selectedIndex);
         }
       });
+
+    _swipeEventSubscription = _swipeService.swipeEventController.stream.listen((SwipeEvent event) {
+      _logger.d('Received an swipe event for the authenticated tab bar: $event');
+
+      int targetIndex = _currentTabIndex;
+      if (SwipeEvent.Left == event) {
+        targetIndex = min(_currentTabIndex + 1, _realPages.length - 1);
+      }
+
+      if (SwipeEvent.Right == event) {
+        targetIndex = max(_currentTabIndex - 1, 0);
+      }
+
+      _logger.d("Changing to tab '$targetIndex' because of a swipe event");
+      _tabController.animateTo(targetIndex);
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _swipeEventSubscription.cancel();
     super.dispose();
   }
 

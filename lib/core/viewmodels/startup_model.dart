@@ -12,7 +12,7 @@ class StartUpViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   Future handleStartUpLogic() async {
-    setState(ViewState.Busy);
+    setStateView(ViewState.Busy);
     setStateMessage(translate('startup.init'));
     await Future.delayed(Duration(milliseconds: 150));
 
@@ -22,6 +22,6 @@ class StartUpViewModel extends BaseModel {
 
     _navigationService.navigateAndReplaceTo(HomeView.routeName);
 
-    setState(ViewState.Idle);
+    setStateView(ViewState.Idle);
   }
 }
