@@ -8,6 +8,7 @@ import 'package:share/share.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/models/session.dart';
 import '../../core/util/formatter_util.dart';
+import '../../core/util/paste_util.dart';
 import '../../core/viewmodels/history_model.dart';
 import '../../ui/widgets/centered_error_row.dart';
 import '../shared/app_colors.dart';
@@ -56,7 +57,7 @@ class HistoryView extends StatelessWidget {
       model.pastes.reversed.forEach((paste) {
         List<Widget> widgets = [];
 
-        var fullPasteUrl = '$url/${paste.id}';
+        var fullPasteUrl = PasteUtil.generateLink(url, paste.id);
         var openInBrowserButton = _renderOpenInBrowser(model, fullPasteUrl);
 
         var dateWidget = ListTile(
@@ -144,12 +145,11 @@ class HistoryView extends StatelessWidget {
               tapHeaderToExpand: true),
           child: ExpandablePanel(
             header: InkWell(
-                onLongPress: () => model.deletePaste(paste.id),
                 child: Text(
-                  paste.id,
-                  style: TextStyle(color: blueColor),
-                  textAlign: TextAlign.left,
-                )),
+              paste.id,
+              style: TextStyle(color: blueColor),
+              textAlign: TextAlign.left,
+            )),
             expanded: Column(
               mainAxisSize: MainAxisSize.min,
               children: widgets,

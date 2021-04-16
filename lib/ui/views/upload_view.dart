@@ -119,15 +119,9 @@ class UploadView extends StatelessWidget {
                                       ? null
                                       : () async {
                                           Map<String, bool> items = await model.upload();
+                                          String clipboardContent = model.generatePasteLinks(items, url);
 
-                                          if (items != null) {
-                                            var clipboardContent = '';
-                                            items.forEach((id, isMulti) {
-                                              if (isMulti && model.createMulti || !isMulti && !model.createMulti) {
-                                                clipboardContent += '$url/$id\n';
-                                              }
-                                            });
-
+                                          if (clipboardContent != null && clipboardContent.isNotEmpty) {
                                             FlutterClipboard.copy(clipboardContent).then((value) {
                                               final snackBar = SnackBar(
                                                 action: SnackBarAction(

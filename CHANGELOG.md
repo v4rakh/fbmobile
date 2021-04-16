@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.2+11
+* Add a slash to copied URLs
+* Expand item when pressing on the card's title in history view
+
 ## 1.3.1+10
 * Added gesture detection for tab bar
 * Disable upload when no files have been attached or upload text input is empty

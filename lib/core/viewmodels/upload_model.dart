@@ -22,6 +22,7 @@ import '../services/file_service.dart';
 import '../services/link_service.dart';
 import '../services/refresh_service.dart';
 import '../util/logger.dart';
+import '../util/paste_util.dart';
 import 'base_model.dart';
 
 class UploadModel extends BaseModel {
@@ -109,6 +110,22 @@ class UploadModel extends BaseModel {
         setStateView(ViewState.Idle);
       }
     });
+  }
+
+  String generatePasteLinks(Map<String, bool> uploads, String url) {
+    if (uploads != null && uploads.length > 0) {
+      var links = '';
+
+      uploads.forEach((id, isMulti) {
+        if (isMulti && createMulti || !isMulti && !createMulti) {
+          links += '${PasteUtil.generateLink(url, id)}\n';
+        }
+      });
+
+      return links;
+    }
+
+    return null;
   }
 
   void toggleCreateMulti() {
