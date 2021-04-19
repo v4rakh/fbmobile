@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.3.3+12 - UNRELEASED
+* Automatically switch to initial tab when coming from the share menu
+
 ## 1.3.2+11
 * Add a slash to copied URLs
 * Expand item when pressing on the card's title in history view

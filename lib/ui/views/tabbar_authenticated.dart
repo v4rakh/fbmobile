@@ -52,7 +52,7 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
       });
 
     _swipeEventSubscription = _swipeService.swipeEventController.stream.listen((SwipeEvent event) {
-      _logger.d('Received an swipe event for the authenticated tab bar: $event');
+      _logger.d('Received a swipe event for the authenticated tab bar: $event');
 
       int targetIndex = _currentTabIndex;
       if (SwipeEvent.Left == event) {
@@ -63,7 +63,15 @@ class AuthenticatedTabBarState extends State<AuthenticatedTabBarView> with Singl
         targetIndex = max(_currentTabIndex - 1, 0);
       }
 
-      _logger.d("Changing to tab '$targetIndex' because of a swipe event");
+      if (SwipeEvent.Start == event) {
+        targetIndex = 0;
+      }
+
+      if (SwipeEvent.End == event) {
+        targetIndex = _tabPages.length - 1;
+      }
+
+      _logger.d("Changing to tab '$targetIndex' because of a swipe event '$event'");
       _tabController.animateTo(targetIndex);
     });
   }

@@ -12,6 +12,7 @@ import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import '../../locator.dart';
 import '../enums/error_code.dart';
 import '../enums/refresh_event.dart';
+import '../enums/swipe_event.dart';
 import '../enums/viewstate.dart';
 import '../error/rest_service_exception.dart';
 import '../error/service_exception.dart';
@@ -21,6 +22,7 @@ import '../models/rest/uploaded_response.dart';
 import '../services/file_service.dart';
 import '../services/link_service.dart';
 import '../services/refresh_service.dart';
+import '../services/swipe_service.dart';
 import '../util/logger.dart';
 import '../util/paste_util.dart';
 import 'base_model.dart';
@@ -30,6 +32,7 @@ class UploadModel extends BaseModel {
   final FileService _fileService = locator<FileService>();
   final LinkService _linkService = locator<LinkService>();
   final RefreshService _refreshService = locator<RefreshService>();
+  final SwipeService _swipeService = locator<SwipeService>();
 
   TextEditingController _pasteTextController = TextEditingController();
   bool pasteTextTouched = false;
@@ -64,12 +67,12 @@ class UploadModel extends BaseModel {
           });
         }).toList();
         setStateView(ViewState.Idle);
+        if (paths.isNotEmpty && paths.length > 0) {
+          _swipeService.addEvent(SwipeEvent.Start);
+        }
       }
     }, onError: (err) {
-      setStateView(ViewState.Busy);
-      errorMessage = translate('upload.retrieval_intent');
-      _logger.e('Error while retrieving shared data: $err');
-      setStateView(ViewState.Idle);
+      _errorIntentHandle(err);
     });
 
     // For sharing images coming from outside the app while the app is closed
@@ -85,7 +88,12 @@ class UploadModel extends BaseModel {
           });
         }).toList();
         setStateView(ViewState.Idle);
+        if (paths.isNotEmpty && paths.length > 0) {
+          _swipeService.addEvent(SwipeEvent.Start);
+        }
       }
+    }, onError: (err) {
+      _errorIntentHandle(err);
     });
 
     // For sharing or opening urls/text coming from outside the app while the app is in the memory
@@ -94,12 +102,10 @@ class UploadModel extends BaseModel {
         setStateView(ViewState.Busy);
         pasteTextController.text = value;
         setStateView(ViewState.Idle);
+        _swipeService.addEvent(SwipeEvent.Start);
       }
     }, onError: (err) {
-      setStateView(ViewState.Busy);
-      errorMessage = translate('upload.retrieval_intent');
-      _logger.e('Error while retrieving shared data: $err');
-      setStateView(ViewState.Idle);
+      _errorIntentHandle(err);
     });
 
     // For sharing or opening urls/text coming from outside the app while the app is closed
@@ -108,8 +114,22 @@ class UploadModel extends BaseModel {
         setStateView(ViewState.Busy);
         pasteTextController.text = value;
         setStateView(ViewState.Idle);
+        if (paths.isNotEmpty && paths.length > 0) {
+          _swipeService.addEvent(SwipeEvent.Start);
+        }
       }
+    }, onError: (err) {
+      _errorIntentHandle(err);
     });
+  }
+
+  void _errorIntentHandle(err) {
+    setStateView(ViewState.Busy);
+    errorMessage = translate('upload.retrieval_intent');
+    _logger.e('Error while retrieving shared data: $err');
+    setStateView(ViewState.Idle);
+
+    _swipeService.addEvent(SwipeEvent.Start);
   }
 
   String generatePasteLinks(Map<String, bool> uploads, String url) {

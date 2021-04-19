@@ -1,1 +1,1 @@
-enum SwipeEvent { Left, Right }
+enum SwipeEvent { Start, Left, Right, End }
