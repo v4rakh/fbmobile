@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:flutter_translate/localization_provider.dart';
-import 'package:flutter_translate/localized_app.dart';
 import 'package:provider/provider.dart';
 
 import 'core/enums/refresh_event.dart';

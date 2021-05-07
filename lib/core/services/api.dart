@@ -31,7 +31,7 @@ class Api implements ApiErrorConverter {
     try {
       _logger
           .d("Requesting GET API endpoint '${_url + route}' with headers '$_headers' and maximum timeout '$_timeout'");
-      var response = await http.get(_url + route, headers: _headers).timeout(_timeout);
+      var response = await http.get(Uri.parse(_url + route), headers: _headers).timeout(_timeout);
       handleRestErrors(response);
       return response;
     } on TimeoutException {

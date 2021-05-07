@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/startup_model.dart';
@@ -10,7 +10,7 @@ class StartUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<StartUpViewModel>.withConsumer(
+    return ViewModelBuilder<StartUpViewModel>.reactive(
         viewModelBuilder: () => StartUpViewModel(),
         onModelReady: (model) => model.handleStartUpLogic(),
         builder: (context, model, child) => Scaffold(

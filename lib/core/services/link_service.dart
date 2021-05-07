@@ -1,4 +1,4 @@
-import 'package:flutter_translate/global.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
