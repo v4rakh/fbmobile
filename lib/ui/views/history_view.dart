@@ -144,6 +144,7 @@ class HistoryView extends StatelessWidget {
               iconColor: blueColor,
               tapHeaderToExpand: true),
           child: ExpandablePanel(
+            collapsed: Container(),
             header: InkWell(
                 child: Text(
               paste.id,
