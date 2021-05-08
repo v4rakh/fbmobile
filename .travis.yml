@@ -8,6 +8,9 @@ addons:
 env:
   global:
     - FLUTTER_CHANNEL=stable
+    - ANDROID_API_LEVEL=28
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+    - ANDROID_ABI=armeabi-v7a
 install:
   - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL
   - export PATH=$(pwd)/flutter/bin:$PATH
@@ -27,9 +30,10 @@ build: &build
   android:
     components:
       - tools
+      - tools
       - platform-tools
-      - build-tools-29
-      - android-29
+      - build-tools-28.0.3
+      - android-28
   before_script:
     - export BUILD_NAME=$TRAVIS_TAG
     - export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
