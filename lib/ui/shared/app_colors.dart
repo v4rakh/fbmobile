@@ -27,3 +27,6 @@ const Color whiteColor = Colors.white;
 const Color redColor = Colors.red;
 const Color orangeColor = Colors.orange;
 const Color greenColor = Colors.green;
+
+/// Theme
+const Brightness appBarBrightness = Brightness.dark;

@@ -12,7 +12,7 @@ class MyAppBar extends AppBar {
             key: key,
             title: Row(children: <Widget>[title]),
             actions: _renderIconButtons(actionWidgets, enableAbout),
-            brightness: Brightness.dark,
+            brightness: appBarBrightness,
             backgroundColor: primaryAccentColor);
 
   static List<Widget> _renderIconButtons(List<Widget> actionWidgets, bool aboutEnabled) {
