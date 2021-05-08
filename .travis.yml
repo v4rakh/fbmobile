@@ -1,20 +1,53 @@
-language: dart
+# based on https://gist.github.com/KNawm/9c7c7963e7f772d6d5172fe9da7ce79b
+language: generic
 dist: bionic
 addons:
   apt:
     packages:
       - lib32stdc++6
+env:
+  global:
+    - FLUTTER_CHANNEL=stable
 install:
-  - git clone https://github.com/flutter/flutter.git -b stable --depth 1
-  - export PATH=./flutter/bin:$PATH
-  - flutter doctor --version
-script:
-  - cd $TRAVIS_BUILD_DIR
+  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL --depth 1
+  - export PATH=$(pwd)/flutter/bin:$PATH
+  - export PATH=$(pwd)/flutter/bin/cache/dart-sdk/bin:$PATH
+  - flutter doctor -v
   - flutter pub get
   - flutter pub upgrade
   - flutter packages pub run build_runner build --delete-conflicting-outputs
-  - flutter analyze --no-pub --no-current-package lib/
-  - flutter build apk
+
+static_analysis: &static_analysis
+  name: "Static analysis"
+  script: flutter analyze --no-current-package $TRAVIS_BUILD_DIR/lib
+
+build: &build
+  name: "Build APK"
+  language: android
+  jdk:
+    - oraclejdk8
+  android:
+    components:
+      - tools
+      - tools # See (https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
+      - platform-tools
+      - build-tools-28.0.3
+      - android-27 # Breaks the build if not present (https://github.com/flutter/flutter/pull/26798#issuecomment-455758159)
+      - android-29
+  before_script:
+    - export BUILD_NAME=$TRAVIS_TAG
+    - export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
+  script:
+    - if [[ $TRAVIS_TAG == "" ]]; then flutter build apk; else flutter build apk --build-name $BUILD_NAME --build-number $BUILD_NUMBER; fi
+  after_deploy:
+    - git branch $TRAVIS_TAG
+    - git push https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_TAG
+
+jobs:
+  include:
+    - <<: *static_analysis
+    - stage: build
+      <<: *build
 cache:
   directories:
     - $HOME/.pub-cache
