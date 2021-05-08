@@ -9,7 +9,7 @@ env:
   global:
     - FLUTTER_CHANNEL=stable
 install:
-  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL --depth 1
+  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL
   - export PATH=$(pwd)/flutter/bin:$PATH
   - export PATH=$(pwd)/flutter/bin/cache/dart-sdk/bin:$PATH
   - flutter doctor -v
@@ -27,10 +27,8 @@ build: &build
   android:
     components:
       - tools
-      - tools # See (https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
       - platform-tools
-      - build-tools-28.0.3
-      - android-27 # Breaks the build if not present (https://github.com/flutter/flutter/pull/26798#issuecomment-455758159)
+      - build-tools-29
       - android-29
   before_script:
     - export BUILD_NAME=$TRAVIS_TAG
