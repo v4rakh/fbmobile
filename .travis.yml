@@ -1,6 +1,6 @@
 # based on https://gist.github.com/KNawm/9c7c7963e7f772d6d5172fe9da7ce79b
 language: generic
-dist: focal
+dist: bionic
 addons:
   apt:
     packages:
