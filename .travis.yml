@@ -24,8 +24,6 @@ static_analysis: &static_analysis
 build: &build
   name: "Build APK"
   language: android
-  jdk:
-    - openjdk8
   android:
     components:
       - tools
