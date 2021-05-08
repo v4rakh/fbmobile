@@ -39,9 +39,6 @@ build: &build
     - export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
   script:
     - if [[ $TRAVIS_TAG == "" ]]; then flutter build apk; else flutter build apk --build-name $BUILD_NAME --build-number $BUILD_NUMBER; fi
-  after_deploy:
-    - git branch $TRAVIS_TAG
-    - git push https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_TAG
 
 jobs:
   include:
