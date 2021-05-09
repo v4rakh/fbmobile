@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## 1.3.3+12 - UNRELEASED
+## 1.3.3+12
 * Automatically switch to initial tab when coming from the share menu
+* Upgraded internal dependencies
 
 ## 1.3.2+11
 * Add a slash to copied URLs

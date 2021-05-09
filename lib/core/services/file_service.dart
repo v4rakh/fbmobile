@@ -3,27 +3,31 @@ import 'dart:io';
 
 import '../../core/repositories/file_repository.dart';
 import '../../locator.dart';
+import '../models/rest/config.dart';
+import '../models/rest/history.dart';
+import '../models/rest/uploaded_multi_response.dart';
+import '../models/rest/uploaded_response.dart';
 
 class FileService {
   final FileRepository _fileRepository = locator<FileRepository>();
 
-  Future getConfig(String url) async {
+  Future<Config> getConfig(String url) async {
     return await _fileRepository.getConfig(url);
   }
 
-  Future getHistory() async {
+  Future<History> getHistory() async {
     return await _fileRepository.getHistory();
   }
 
-  Future deletePaste(String id) async {
-    return await _fileRepository.delete(id);
+  Future<void> deletePaste(String id) async {
+    return await _fileRepository.postDelete(id);
   }
 
-  Future upload(List<File> files, Map<String, String> additionalFiles) async {
-    return await _fileRepository.upload(files, additionalFiles);
+  Future<UploadedResponse> uploadPaste(List<File> files, Map<String, String> additionalFiles) async {
+    return await _fileRepository.postUpload(files, additionalFiles);
   }
 
-  Future createMulti(List<String> ids) async {
-    return await _fileRepository.createMulti(ids);
+  Future<UploadedMultiResponse> uploadMultiPaste(List<String> ids) async {
+    return await _fileRepository.postCreateMultiPaste(ids);
   }
 }

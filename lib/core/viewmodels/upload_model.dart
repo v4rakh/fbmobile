@@ -208,13 +208,13 @@ class UploadModel extends BaseModel {
         files = paths.map((e) => new File(e.path)).toList();
       }
 
-      UploadedResponse response = await _fileService.upload(files, additionalFiles);
+      UploadedResponse response = await _fileService.uploadPaste(files, additionalFiles);
       response.data.ids.forEach((element) {
         uploadedPasteIds.putIfAbsent(element, () => false);
       });
 
       if (createMulti && response.data.ids.length > 1) {
-        UploadedMultiResponse multiResponse = await _fileService.createMulti(response.data.ids);
+        UploadedMultiResponse multiResponse = await _fileService.uploadMultiPaste(response.data.ids);
         uploadedPasteIds.putIfAbsent(multiResponse.data.urlId, () => true);
       }
 

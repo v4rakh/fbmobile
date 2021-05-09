@@ -8,7 +8,7 @@ import '../services/api.dart';
 class UserRepository {
   Api _api = locator<Api>();
 
-  Future<CreateApiKeyResponse> createApiKey(
+  Future<CreateApiKeyResponse> postApiKey(
       String url, String username, String password, String accessLevel, String comment) async {
     _api.setUrl(url);
 

@@ -120,7 +120,7 @@ class LoginModel extends BaseModel {
         success = await _sessionService.login(url, apiKeyResponse.data['new_key']);
       } else {
         _sessionService.setApiConfig(url, apiKey);
-        success = await _userService.checkAccessLevelIsAtLeastApiKey();
+        await _userService.checkAccessLevelIsAtLeastApiKey();
         success = await _sessionService.login(url, apiKey);
       }
       errorMessage = null;

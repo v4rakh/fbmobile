@@ -27,16 +27,16 @@ class FileRepository {
     return parsedResponse.data;
   }
 
-  Future delete(String id) async {
+  Future<void> postDelete(String id) async {
     await _api.post('/file/delete', fields: {'ids[1]': id});
   }
 
-  Future<UploadedResponse> upload(List<File> files, Map<String, String> additionalFiles) async {
+  Future<UploadedResponse> postUpload(List<File> files, Map<String, String> additionalFiles) async {
     var response = await _api.post('/file/upload', files: files, additionalFiles: additionalFiles);
     return UploadedResponse.fromJson(json.decode(response.body));
   }
 
-  Future createMulti(List<String> ids) async {
+  Future<UploadedMultiResponse> postCreateMultiPaste(List<String> ids) async {
     Map<String, String> multiPasteIds = Map();
 
     ids.forEach((element) {
