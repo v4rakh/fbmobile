@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 1.3.3+13 - UNRELEASED
+
 ## 1.3.3+12
 * Automatically switch to initial tab when coming from the share menu
 * Upgraded internal dependencies
