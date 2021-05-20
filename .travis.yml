@@ -2,24 +2,24 @@
 language: generic
 dist: bionic
 addons:
-  apt:
-    packages:
-      - lib32stdc++6
+    apt:
+        packages:
+            - lib32stdc++6
 env:
-  global:
-    - FLUTTER_CHANNEL=stable
+    global:
+        - FLUTTER_CHANNEL=stable
 install:
-  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL
-  - export PATH=$(pwd)/flutter/bin:$PATH
-  - export PATH=$(pwd)/flutter/bin/cache/dart-sdk/bin:$PATH
-  - flutter doctor -v
-  - flutter pub get
-  - flutter pub upgrade
-  - flutter packages pub run build_runner build --delete-conflicting-outputs
+    - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL
+    - export PATH=$(pwd)/flutter/bin:$PATH
+    - export PATH=$(pwd)/flutter/bin/cache/dart-sdk/bin:$PATH
+    - flutter doctor -v
+    - flutter pub get
+    - flutter pub upgrade
+    - flutter packages pub run build_runner build --delete-conflicting-outputs
 
 static_analysis: &static_analysis
-  name: "Static analysis"
-  script: flutter analyze --no-current-package $TRAVIS_BUILD_DIR/lib
+    name: "Static analysis"
+    script: flutter analyze --no-current-package $TRAVIS_BUILD_DIR/lib
 
 #build: &build
 #  name: "Build APK"
@@ -39,10 +39,10 @@ static_analysis: &static_analysis
 #    - if [[ $TRAVIS_TAG == "" ]]; then flutter build apk; else flutter build apk --build-name $BUILD_NAME --build-number $BUILD_NUMBER; fi
 
 jobs:
-  include:
-    - <<: *static_analysis
+    include:
+        -   <<: *static_analysis
 #    - stage: build
 #      <<: *build
 cache:
-  directories:
-    - $HOME/.pub-cache
+    directories:
+        - $HOME/.pub-cache

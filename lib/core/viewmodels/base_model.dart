@@ -15,6 +15,7 @@ class BaseModel extends ChangeNotifier {
   Map<String, Object> _stateMap = {STATE_VIEW: ViewState.Idle, STATE_MESSAGE: null};
 
   ViewState get state => _stateMap[STATE_VIEW];
+
   String get stateMessage => _stateMap[STATE_MESSAGE];
 
   void setStateValue(String key, Object stateValue) {
